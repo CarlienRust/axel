@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom'
 import { Box } from '@mui/material'
 import { useSyncExternalStore } from 'react'
 import {
@@ -5,7 +6,7 @@ import {
   setBackgroundVariant,
   type BackgroundVariant,
 } from '../../theme/backgroundPreference'
-import { BackgroundSplash } from './BackgroundSplash'
+import { backgroundColor, BackgroundSplash } from './BackgroundSplash'
 
 function subscribe(onStoreChange: () => void) {
   window.addEventListener('axel-background-change', onStoreChange)
@@ -25,9 +26,14 @@ export function updateBackgroundVariant(variant: BackgroundVariant) {
   notifyBackgroundChange()
 }
 
-/** Fixed app backdrop — moodboard variants from docs/background_moodboard.png */
+/** Fixed app backdrop — solid Warm Linen or Deep Forest */
 export function AppBackground() {
-  const variant = useSyncExternalStore(subscribe, getSnapshot, () => 'abstract-landscape' as BackgroundVariant)
+  const location = useLocation()
+  const variant = useSyncExternalStore(subscribe, getSnapshot, () => 'beige' as BackgroundVariant)
+
+  if (location.pathname === '/') {
+    return null
+  }
 
   return (
     <Box
@@ -37,18 +43,9 @@ export function AppBackground() {
         inset: 0,
         zIndex: 0,
         pointerEvents: 'none',
-        overflow: 'hidden',
+        bgcolor: backgroundColor(variant),
       }}
-    >
-      <BackgroundSplash variant={variant} idPrefix="app" />
-      <Box
-        sx={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(180deg, rgba(246,243,238,0.15) 0%, rgba(246,243,238,0.72) 45%, rgba(246,243,238,0.95) 100%)',
-        }}
-      />
-    </Box>
+    />
   )
 }
 
@@ -72,10 +69,9 @@ export function BackgroundPreview({ variant, selected, onSelect }: {
         borderColor: selected ? 'primary.main' : 'divider',
         cursor: 'pointer',
         p: 0,
-        bgcolor: 'background.paper',
       }}
     >
-      <BackgroundSplash variant={variant} idPrefix={`preview-${variant}`} />
+      <BackgroundSplash variant={variant} />
     </Box>
   )
 }

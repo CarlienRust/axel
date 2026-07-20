@@ -1,5 +1,3 @@
-import FormatQuoteOutlinedIcon from '@mui/icons-material/FormatQuoteOutlined'
-import VolumeUpOutlinedIcon from '@mui/icons-material/VolumeUpOutlined'
 import { Box } from '@mui/material'
 import { useState } from 'react'
 import { QuoteBlock } from '../../components/brand/ContentCards'
@@ -32,7 +30,6 @@ export function ReframePage() {
               variant="outlined"
               onClick={() => toggle(reframe.body)}
               aria-label={isSpeaking ? COPY.ariaReframeStop : COPY.ariaReframeListen}
-              startIcon={<VolumeUpOutlinedIcon />}
               sx={{ flex: 1 }}
             >
               {isSpeaking ? COPY.reframeStop : COPY.reframeListen}
@@ -45,9 +42,6 @@ export function ReframePage() {
       }
     >
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, py: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', color: 'primary.main', opacity: 0.35 }}>
-          <FormatQuoteOutlinedIcon sx={{ fontSize: 48 }} />
-        </Box>
         <QuoteBlock>{reframe.body}</QuoteBlock>
       </Box>
     </ToolScreenLayout>

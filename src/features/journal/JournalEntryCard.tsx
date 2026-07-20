@@ -1,5 +1,5 @@
 import { Box, Paper, Typography } from '@mui/material'
-import { LandscapeThumb } from '../../components/brand/LandscapeIllustration'
+import { ThreadThumb } from '../../components/brand/ThreadIllustration'
 import type { JournalEntry } from './journalUtils'
 
 type JournalEntryCardProps = {
@@ -25,7 +25,7 @@ export function JournalEntryCard({ entry }: JournalEntryCardProps) {
           borderColor: 'divider',
         }}
       >
-        <LandscapeThumb />
+        <ThreadThumb />
       </Box>
       <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
         <Typography variant="caption" color="text.secondary">

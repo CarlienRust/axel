@@ -55,6 +55,13 @@ export function formatPrepSummary(
     lines.push('')
   }
 
+  const timelineNote = answers.timeline_note?.trim()
+  if (timelineNote) {
+    lines.push('Timeline note')
+    lines.push(timelineNote)
+    lines.push('')
+  }
+
   lines.push('---')
   lines.push('This summary was prepared by me. Axel does not diagnose.')
 

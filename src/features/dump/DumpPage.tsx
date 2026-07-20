@@ -50,6 +50,11 @@ export function DumpPage() {
     ? `${content}${content ? ' ' : ''}${interimText}`
     : content
 
+  const textLen = displayContent.trim().length
+  const baseProgress = Math.min(textLen / 120, 0.85)
+  const activeBoost = isListening ? 0.1 : 0
+  const threadProgress = Math.min(baseProgress + activeBoost, 1)
+
   const canSubmit = content.trim().length > 0 && !mutation.isPending
 
   function handleSubmit(e: FormEvent) {
@@ -59,15 +64,15 @@ export function DumpPage() {
 
   if (mutation.isPending) {
     return (
-      <CenteredScreen showCrisisLink>
+      <CenteredScreen>
         <LoadingState />
       </CenteredScreen>
     )
   }
 
   return (
-    <CenteredScreen showCrisisLink align="top">
-      <PageHeader title={COPY.brainDumpTitle} subtitle={COPY.brainDumpHint} />
+    <CenteredScreen align="top">
+      <PageHeader title={COPY.noiseDumpTitle} subtitle={COPY.noiseDumpHint} />
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -85,7 +90,7 @@ export function DumpPage() {
               py: 4,
             }}
           >
-            <WaveformDecoration active={isListening} />
+            <WaveformDecoration active={isListening} progress={threadProgress} />
             <CircularMicButton isListening={isListening} onClick={toggle} />
             {(content.trim().length > 0 || interimText) && (
               <Paper sx={{ p: 2, width: '100%', bgcolor: 'background.paper' }}>
@@ -94,7 +99,7 @@ export function DumpPage() {
                   onChange={(e) => setContent(e.target.value)}
                   minRows={3}
                   slotProps={{
-                    htmlInput: { 'aria-label': COPY.brainDumpTitle, readOnly: isListening },
+                    htmlInput: { 'aria-label': COPY.noiseDumpTitle, readOnly: isListening },
                   }}
                 />
               </Paper>
@@ -108,7 +113,7 @@ export function DumpPage() {
               minRows={10}
               placeholder={COPY.brainDumpPlaceholder}
               slotProps={{
-                htmlInput: { 'aria-label': COPY.brainDumpTitle },
+                htmlInput: { 'aria-label': COPY.noiseDumpTitle },
               }}
               sx={{
                 '& .MuiOutlinedInput-root fieldset': { border: 'none' },

@@ -57,7 +57,7 @@ export function ReturnPage() {
 
   if (!dumpId || !response) {
     return (
-      <CenteredScreen showCrisisLink align="top">
+      <CenteredScreen align="top">
         <Typography align="center" color="text.secondary">
           {COPY.emptyState}
         </Typography>
@@ -67,7 +67,7 @@ export function ReturnPage() {
 
   if (phase === 'reframe' && reframe) {
     return (
-      <CenteredScreen showCrisisLink align="top">
+      <CenteredScreen align="top">
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, py: 2 }}>
           <QuoteBlock>{reframe.body}</QuoteBlock>
           <CalmButton variant="contained" onClick={() => navigate('/')} sx={{ alignSelf: 'center' }}>
@@ -80,7 +80,7 @@ export function ReturnPage() {
 
   if (phase === 'acknowledgment') {
     return (
-      <CenteredScreen showCrisisLink align="top">
+      <CenteredScreen align="top">
         <Box sx={{ py: 6, px: 2, textAlign: 'center' }}>
           <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.75, fontSize: '1.0625rem' }}>
             {ackMessage}
@@ -91,7 +91,7 @@ export function ReturnPage() {
   }
 
   return (
-    <CenteredScreen showCrisisLink align="top">
+    <CenteredScreen align="top">
       <PageHeader title={COPY.checkinQuestion} />
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, justifyContent: 'center' }}>
         {checkinOptions.map((option) => (

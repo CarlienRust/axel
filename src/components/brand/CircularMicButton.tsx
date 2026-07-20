@@ -18,9 +18,9 @@ export function CircularMicButton({ isListening, onClick, disabled }: CircularMi
       sx={{
         width: 88,
         height: 88,
-        bgcolor: 'primary.dark',
+        bgcolor: 'primary.main',
         color: 'primary.contrastText',
-        '&:hover': { bgcolor: 'primary.main' },
+        '&:hover': { bgcolor: 'primary.dark' },
         '&.Mui-disabled': { bgcolor: 'action.disabledBackground', color: 'text.disabled' },
       }}
     >

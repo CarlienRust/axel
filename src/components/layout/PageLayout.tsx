@@ -23,11 +23,10 @@ export function PageHeader({ title, subtitle }: PageHeaderProps) {
 
 type PageLayoutProps = {
   children: ReactNode
-  showCrisisLink?: boolean
 }
 
 /** Standard screen container — mockup-style padding on Warm Linen */
-export function PageLayout({ children, showCrisisLink = false }: PageLayoutProps) {
+export function PageLayout({ children }: PageLayoutProps) {
   return (
     <Box
       sx={{
@@ -35,27 +34,11 @@ export function PageLayout({ children, showCrisisLink = false }: PageLayoutProps
         mx: 'auto',
         px: 3,
         pt: 3,
-        pb: showCrisisLink ? 6 : 3,
+        pb: 3,
         minHeight: '100%',
       }}
     >
       {children}
-      {showCrisisLink && (
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          sx={{ display: 'block', textAlign: 'center', mt: 4, opacity: 0.7 }}
-        >
-          Crisis help:{' '}
-          <Typography
-            component="a"
-            href="tel:0800212223"
-            sx={{ color: 'primary.main', textDecoration: 'none' }}
-          >
-            SADAG 0800 21 22 23
-          </Typography>
-        </Typography>
-      )}
     </Box>
   )
 }

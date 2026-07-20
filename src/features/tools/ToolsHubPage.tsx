@@ -1,7 +1,7 @@
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined'
+import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined'
 import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrongOutlined'
-import FormatQuoteOutlinedIcon from '@mui/icons-material/FormatQuoteOutlined'
-import SpaOutlinedIcon from '@mui/icons-material/SpaOutlined'
+import RouteOutlinedIcon from '@mui/icons-material/RouteOutlined'
 import { Box, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { ToolListCard } from '../../components/brand/ToolListCard'
@@ -28,15 +28,15 @@ export function ToolsHubPage() {
         <ToolListCard
           title={COPY.reframeTitle}
           description={COPY.toolsReframeDesc}
-          icon={<FormatQuoteOutlinedIcon />}
+          icon={<RouteOutlinedIcon />}
           onClick={() => navigate('/reframe')}
         />
 
         <ToolListCard
-          title={COPY.groundTitle}
-          description={COPY.toolsGroundDesc}
-          icon={<SpaOutlinedIcon />}
-          onClick={() => navigate('/ground')}
+          title={COPY.landingToolsTitle}
+          description={COPY.toolsLandingDesc}
+          icon={<BuildOutlinedIcon />}
+          onClick={() => navigate('/landing-tools')}
         />
 
         <ToolListCard

@@ -1,31 +1,41 @@
-/** Background splash variants — see docs/background_moodboard.png */
-export type BackgroundVariant =
-  | 'abstract-landscape'
-  | 'paper-cut'
-  | 'topographic'
-  | 'noise-clarity'
-  | 'sound-wave'
+/** Background variants — plain app beige or plain app green with clarity wave */
+export type BackgroundVariant = 'beige' | 'green'
 
 export const BACKGROUND_VARIANTS: { id: BackgroundVariant; label: string }[] = [
-  { id: 'abstract-landscape', label: 'Abstract landscape' },
-  { id: 'paper-cut', label: 'Paper cut layers' },
-  { id: 'topographic', label: 'Topographic calm' },
-  { id: 'noise-clarity', label: 'Noise to clarity' },
-  { id: 'sound-wave', label: 'Sound wave dissolving' },
+  { id: 'beige', label: 'Warm Linen' },
+  { id: 'green', label: 'Deep Forest' },
 ]
 
 const STORAGE_KEY = 'axel-background'
 
+const LEGACY_MAP: Record<string, BackgroundVariant> = {
+  'abstract-landscape': 'beige',
+  'paper-cut': 'beige',
+  topographic: 'beige',
+  'noise-clarity': 'beige',
+  'sound-wave': 'beige',
+  'full-tangle': 'beige',
+  'mid-tangle': 'beige',
+  'near-resolved': 'beige',
+  'almost-clear': 'beige',
+  resolved: 'green',
+}
+
 export function getBackgroundVariant(): BackgroundVariant {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored && BACKGROUND_VARIANTS.some((v) => v.id === stored)) {
-      return stored as BackgroundVariant
+    if (stored) {
+      if (BACKGROUND_VARIANTS.some((v) => v.id === stored)) {
+        return stored as BackgroundVariant
+      }
+      if (stored in LEGACY_MAP) {
+        return LEGACY_MAP[stored]!
+      }
     }
   } catch {
     // ignore
   }
-  return 'abstract-landscape'
+  return 'beige'
 }
 
 export function setBackgroundVariant(variant: BackgroundVariant): void {

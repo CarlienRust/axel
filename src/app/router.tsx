@@ -1,7 +1,7 @@
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
-import SpaOutlinedIcon from '@mui/icons-material/SpaOutlined'
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined'
 import { BottomNavigation, BottomNavigationAction, Box, Paper } from '@mui/material'
 import type { ReactElement } from 'react'
 import { useLocation, useNavigate, Routes, Route, Navigate } from 'react-router-dom'
@@ -9,11 +9,13 @@ import { AppBackground } from '../components/brand/AppBackground'
 import { COPY } from '../constants/copy'
 import { DumpPage } from '../features/dump/DumpPage'
 import { EntryPage } from '../features/entry/EntryPage'
-import { GroundPage } from '../features/landing/GroundPage'
+import { LandingToolPage } from '../features/landing/LandingToolPage'
+import { LandingToolsHubPage } from '../features/landing/LandingToolsHubPage'
 import { JournalPage } from '../features/journal/JournalPage'
 import { LibraryPage } from '../features/library/LibraryPage'
 import { OneThingPage } from '../features/onething/OneThingPage'
-import { PrepPage } from '../features/prep/PrepPage'
+import { PrepHubPage } from '../features/prep/PrepHubPage'
+import { PrepSectionPage } from '../features/prep/PrepSectionPage'
 import { ProfilePage } from '../features/profile/ProfilePage'
 import { ReframePage } from '../features/reframe/ReframePage'
 import { ReturnPage } from '../features/return/ReturnPage'
@@ -27,7 +29,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: COPY.navHome, icon: <HomeOutlinedIcon />, path: '/' },
-  { label: COPY.navTools, icon: <SpaOutlinedIcon />, path: '/tools' },
+  { label: COPY.navTools, icon: <ForumOutlinedIcon />, path: '/tools' },
   { label: COPY.navLibrary, icon: <MenuBookOutlinedIcon />, path: '/library' },
   { label: COPY.navProfile, icon: <PersonOutlineIcon />, path: '/profile' },
 ]
@@ -36,8 +38,8 @@ function navIndex(pathname: string): number {
   if (pathname === '/' || pathname === '/dump') return 0
   if (
     pathname === '/tools' ||
-    pathname === '/ground' ||
-    pathname === '/prep' ||
+    pathname.startsWith('/landing-tools') ||
+    pathname.startsWith('/prep') ||
     pathname === '/reframe'
   ) {
     return 1
@@ -69,11 +71,14 @@ function AppLayout() {
           <Route path="/return/:dumpId" element={<ReturnPage />} />
           <Route path="/tools" element={<ToolsHubPage />} />
           <Route path="/reframe" element={<ReframePage />} />
+          <Route path="/landing-tools" element={<LandingToolsHubPage />} />
+          <Route path="/landing-tools/:toolId" element={<LandingToolPage />} />
+          <Route path="/ground" element={<Navigate to="/landing-tools" replace />} />
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/journal" element={<JournalPage />} />
-          <Route path="/ground" element={<GroundPage />} />
-          <Route path="/prep" element={<PrepPage />} />
+          <Route path="/prep" element={<PrepHubPage />} />
+          <Route path="/prep/:sectionId" element={<PrepSectionPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Box>

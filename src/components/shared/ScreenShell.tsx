@@ -1,7 +1,6 @@
 import { Box } from '@mui/material'
 import type { ReactNode } from 'react'
 import { PageHeader } from '../layout/PageLayout'
-import { CrisisBanner } from './CrisisBanner'
 
 type ScreenShellProps = {
   children: ReactNode
@@ -22,8 +21,6 @@ export function ScreenShell({ children, title, subtitle }: ScreenShellProps) {
         gap: 4,
       }}
     >
-      <CrisisBanner />
-
       {title && <PageHeader title={title} subtitle={subtitle} />}
 
       {children}

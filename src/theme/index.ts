@@ -38,14 +38,14 @@ export const theme = createTheme({
     fontSize: 17,
     h1: {
       fontSize: brand.font.display,
-      fontWeight: 600,
-      lineHeight: 1.3,
+      fontWeight: 500,
+      lineHeight: 1.1,
       color: brand.textPrimary,
     },
     h2: {
       fontSize: brand.font.heading,
       fontWeight: 600,
-      lineHeight: 1.35,
+      lineHeight: 1.25,
       color: brand.textPrimary,
     },
     h3: {
@@ -142,8 +142,9 @@ export const theme = createTheme({
           transition: `background-color ${brand.motion.duration} ${brand.motion.easing}`,
         },
         containedPrimary: {
+          backgroundColor: brand.primaryDark,
           '&:hover': {
-            backgroundColor: brand.primaryDark,
+            backgroundColor: brand.primary,
           },
         },
         outlined: {

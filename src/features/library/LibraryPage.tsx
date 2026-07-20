@@ -24,7 +24,7 @@ export function LibraryPage() {
     <ScreenShell title={COPY.libraryTitle} subtitle={COPY.librarySubtitle}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
         <ToolListCard
-          title={COPY.brainDumpTitle}
+          title={COPY.noiseDumpTitle}
           description={COPY.libraryBrainDumpDesc}
           icon={<EditNoteOutlinedIcon />}
           onClick={() => navigate('/dump')}

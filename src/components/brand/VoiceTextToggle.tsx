@@ -1,6 +1,7 @@
 import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import { ThreadIllustration } from './ThreadIllustration'
 
 export type InputMode = 'voice' | 'text'
 
@@ -52,33 +53,21 @@ export function VoiceTextToggle({ mode, onChange }: VoiceTextToggleProps) {
   )
 }
 
-export function WaveformDecoration({ active }: { active?: boolean }) {
+export function WaveformDecoration({
+  active,
+  progress = 0,
+}: {
+  active?: boolean
+  progress?: number
+}) {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 0.75,
-        height: 80,
-        opacity: active ? 1 : 0.5,
-        transition: 'opacity 200ms ease',
-      }}
-      aria-hidden
-    >
-      {[14, 28, 42, 24, 36, 20, 32, 18, 26].map((h, i) => (
-        <Box
-          key={i}
-          sx={{
-            width: 4,
-            height: active ? h : h * 0.4,
-            borderRadius: 999,
-            bgcolor: 'primary.main',
-            opacity: 0.35 + (i % 3) * 0.15,
-            transition: 'height 300ms ease',
-          }}
-        />
-      ))}
+    <Box sx={{ width: '100%', maxWidth: 320, opacity: active ? 1 : 0.7, transition: 'opacity 200ms ease' }}>
+      <ThreadIllustration
+        height={72}
+        resolveProgress={progress}
+        showDot
+        animated={active}
+      />
     </Box>
   )
 }

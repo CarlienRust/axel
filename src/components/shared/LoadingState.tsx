@@ -4,7 +4,7 @@ type LoadingStateProps = {
   message?: string
 }
 
-export function LoadingState({ message = 'Axel is listening...' }: LoadingStateProps) {
+export function LoadingState({ message = 'Straightening this out…' }: LoadingStateProps) {
   return (
     <Box
       sx={{
