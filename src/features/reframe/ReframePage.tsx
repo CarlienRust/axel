@@ -16,7 +16,7 @@ export function ReframePage() {
       title={COPY.reframeTitle}
       subtitle={COPY.reframeSubtitle}
       footer={
-        <CalmButton variant="contained" fullWidth onClick={() => setIndex((i) => (i + 1) % REFRAMES.length)}>
+        <CalmButton variant="contained" onClick={() => setIndex((i) => (i + 1) % REFRAMES.length)}>
           {COPY.reframeNext}
         </CalmButton>
       }

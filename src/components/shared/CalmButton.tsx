@@ -5,7 +5,7 @@ export function CalmButton(props: ButtonProps) {
     <Button
       size="large"
       {...props}
-      sx={{ borderRadius: '999px', ...props.sx }}
+      sx={{ borderRadius: '999px', minHeight: 48, ...props.sx }}
     />
   )
 }

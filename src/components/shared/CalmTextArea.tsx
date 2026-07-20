@@ -10,9 +10,28 @@ export function CalmTextArea(props: TextFieldProps) {
       slotProps={{
         ...props.slotProps,
         input: {
-          sx: { fontSize: '1rem', lineHeight: 1.6 },
+          sx: {
+            fontSize: '16px',
+            lineHeight: 1.6,
+            '&::placeholder': {
+              opacity: 1,
+              whiteSpace: 'normal',
+            },
+          },
           ...props.slotProps?.input,
         },
+      }}
+      sx={{
+        '& .MuiInputBase-root': {
+          alignItems: 'flex-start',
+        },
+        '& .MuiInputBase-inputMultiline': {
+          overflow: 'auto !important',
+          textOverflow: 'clip',
+          whiteSpace: 'pre-wrap',
+          wordBreak: 'break-word',
+        },
+        ...props.sx,
       }}
     />
   )

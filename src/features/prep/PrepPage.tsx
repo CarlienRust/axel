@@ -62,27 +62,7 @@ export function PrepPage() {
   const hasContent = Object.values(answers).some((v) => v.trim().length > 0) || reflection
 
   return (
-    <ToolScreenLayout
-      title={COPY.prepTitle}
-      subtitle={COPY.prepSubtitle}
-      footer={
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}>
-          {journalEntries.length > 0 && !reflectMutation.isPending && (
-            <CalmButton variant="outlined" fullWidth onClick={() => reflectMutation.mutate()}>
-              {COPY.prepReflect}
-            </CalmButton>
-          )}
-          <Box sx={{ display: 'flex', gap: 1.5, width: '100%' }}>
-            <CalmButton variant="contained" fullWidth onClick={handleSave} disabled={!hasContent}>
-              Save
-            </CalmButton>
-            <CalmButton variant="outlined" fullWidth onClick={handleExport} disabled={!hasContent}>
-              Copy summary
-            </CalmButton>
-          </Box>
-        </Box>
-      }
-    >
+    <ToolScreenLayout title={COPY.prepTitle} subtitle={COPY.prepSubtitle}>
       <Disclaimer />
 
       {journalEntries.length === 0 ? (
@@ -90,7 +70,7 @@ export function PrepPage() {
           {COPY.prepNoJournal}
         </Typography>
       ) : (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 2 }}>
           {reflectMutation.isPending && <LoadingState message={COPY.prepReflecting} />}
           {reflectMutation.isError && (
             <Alert severity="error">
@@ -107,23 +87,65 @@ export function PrepPage() {
               </Typography>
             </Paper>
           )}
+          {!reflectMutation.isPending && (
+            <CalmButton variant="outlined" onClick={() => reflectMutation.mutate()} sx={{ alignSelf: 'flex-start' }}>
+              {COPY.prepReflect}
+            </CalmButton>
+          )}
         </Box>
       )}
 
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, mt: 2 }}>
         {prepPrompts.map((prompt) => (
-          <CalmTextArea
-            key={prompt.id}
-            label={prompt.label}
-            placeholder={prompt.placeholder}
-            value={answers[prompt.id] ?? ''}
-            onChange={(e) => updateAnswer(prompt.id, e.target.value)}
-            minRows={3}
-          />
+          <Box key={prompt.id} component="section">
+            <Typography
+              variant="body1"
+              sx={{
+                fontWeight: 600,
+                lineHeight: 1.5,
+                mb: 1,
+                display: 'block',
+                wordBreak: 'break-word',
+              }}
+            >
+              {prompt.label}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5, lineHeight: 1.6 }}>
+              {prompt.placeholder}
+            </Typography>
+            <CalmTextArea
+              value={answers[prompt.id] ?? ''}
+              onChange={(e) => updateAnswer(prompt.id, e.target.value)}
+              minRows={4}
+              placeholder=""
+              slotProps={{
+                htmlInput: { 'aria-label': prompt.label },
+              }}
+            />
+          </Box>
         ))}
+
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 1.5,
+            pt: 1,
+            pb: 10,
+            '& .MuiButton-root': {
+              flex: 1,
+            },
+          }}
+        >
+          <CalmButton variant="contained" onClick={handleSave} disabled={!hasContent}>
+            Save
+          </CalmButton>
+          <CalmButton variant="outlined" onClick={handleExport} disabled={!hasContent}>
+            Copy summary
+          </CalmButton>
+        </Box>
       </Box>
 
-      {saved && <Alert severity="success">Saved on this device.</Alert>}
+      {saved && <Alert severity="success" sx={{ mb: 8 }}>Saved on this device.</Alert>}
 
       <Snackbar open={copied} autoHideDuration={3000} onClose={() => setCopied(false)} message="Summary copied" />
     </ToolScreenLayout>

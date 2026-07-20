@@ -1,6 +1,6 @@
-import { Alert, Box, Paper } from '@mui/material'
+import { Alert, Box, Paper, Typography } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
-import { useCallback, useState, type FormEvent } from 'react'
+import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CircularMicButton } from '../../components/brand/CircularMicButton'
 import {
@@ -28,7 +28,11 @@ export function DumpPage() {
     setContent((prev) => (prev ? `${prev} ${text}` : text))
   }, [])
 
-  const { supported, isListening, toggle } = useVoiceInput(appendVoice)
+  const { supported, isListening, interimText, toggle } = useVoiceInput(appendVoice)
+
+  useEffect(() => {
+    if (!supported && mode === 'voice') setMode('text')
+  }, [supported, mode])
 
   const mutation = useMutation({
     mutationFn: async (brainDumpContent: string) => {
@@ -41,6 +45,10 @@ export function DumpPage() {
       navigate(`/response/${dumpId}`, { state: { fromDump: true } })
     },
   })
+
+  const displayContent = interimText
+    ? `${content}${content ? ' ' : ''}${interimText}`
+    : content
 
   const canSubmit = content.trim().length > 0 && !mutation.isPending
 
@@ -59,13 +67,13 @@ export function DumpPage() {
 
   return (
     <CenteredScreen showCrisisLink align="top">
-      <PageHeader title={COPY.brainDumpTitle} />
+      <PageHeader title={COPY.brainDumpTitle} subtitle={COPY.brainDumpHint} />
       <Box
         component="form"
         onSubmit={handleSubmit}
         sx={{ display: 'flex', flexDirection: 'column', gap: 3, minHeight: 'calc(100vh - 200px)' }}
       >
-        {mode === 'voice' ? (
+        {mode === 'voice' && supported ? (
           <Box
             sx={{
               flex: 1,
@@ -78,43 +86,36 @@ export function DumpPage() {
             }}
           >
             <WaveformDecoration active={isListening} />
-            <CircularMicButton
-              isListening={isListening}
-              onClick={toggle}
-              disabled={!supported}
-            />
-            {content.trim().length > 0 && (
+            <CircularMicButton isListening={isListening} onClick={toggle} />
+            {(content.trim().length > 0 || interimText) && (
               <Paper sx={{ p: 2, width: '100%', bgcolor: 'background.paper' }}>
                 <CalmTextArea
-                  value={content}
+                  value={displayContent}
                   onChange={(e) => setContent(e.target.value)}
                   minRows={3}
                   slotProps={{
-                    htmlInput: { 'aria-label': COPY.brainDumpTitle },
+                    htmlInput: { 'aria-label': COPY.brainDumpTitle, readOnly: isListening },
                   }}
                 />
               </Paper>
             )}
           </Box>
         ) : (
-          <Paper sx={{ p: 0.5, bgcolor: 'background.paper' }}>
+          <Paper sx={{ p: 0.5, bgcolor: 'background.paper', flex: 1 }}>
             <CalmTextArea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              minRows={14}
-              placeholder=""
+              minRows={10}
+              placeholder={COPY.brainDumpPlaceholder}
               slotProps={{
                 htmlInput: { 'aria-label': COPY.brainDumpTitle },
               }}
-              sx={{ '& .MuiOutlinedInput-root fieldset': { border: 'none' } }}
+              sx={{
+                '& .MuiOutlinedInput-root fieldset': { border: 'none' },
+                '& .MuiInputBase-root': { minHeight: 200 },
+              }}
             />
           </Paper>
-        )}
-
-        {!supported && mode === 'voice' && (
-          <Alert severity="info" sx={{ py: 0.5 }}>
-            {COPY.voiceUnsupported}
-          </Alert>
         )}
 
         {mutation.isError && (
@@ -126,10 +127,13 @@ export function DumpPage() {
         )}
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 'auto', pb: 2 }}>
-          <VoiceTextToggle mode={mode} onChange={setMode} />
+          {supported && <VoiceTextToggle mode={mode} onChange={setMode} />}
           <CalmButton type="submit" variant="contained" fullWidth disabled={!canSubmit}>
             {COPY.thatsEverything}
           </CalmButton>
+          <Typography variant="caption" color="text.secondary" align="center" sx={{ opacity: 0.75 }}>
+            {COPY.brainDumpFooter}
+          </Typography>
         </Box>
       </Box>
     </CenteredScreen>

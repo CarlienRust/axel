@@ -16,6 +16,13 @@ export function EntryPage() {
         justifyContent: 'center',
         px: 3,
         py: 6,
+        '@media (prefers-reduced-motion: no-preference)': {
+          animation: 'axelEntryFade 400ms ease forwards',
+        },
+        '@keyframes axelEntryFade': {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
       }}
     >
       <Box
@@ -43,6 +50,9 @@ export function EntryPage() {
         >
           {COPY.getStarted}
         </CalmButton>
+        <Typography variant="caption" color="text.secondary" sx={{ opacity: 0.75 }}>
+          {COPY.entryTrustLine}
+        </Typography>
       </Box>
     </Box>
   )

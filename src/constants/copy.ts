@@ -2,20 +2,35 @@
 export const COPY = {
   tagline: 'Calm, clarity and silence — in the middle of the noise.',
   entryQuestion: "What's in your head right now?",
+  entryTrustLine: 'No account needed. Just you.',
   start: 'Start',
   getStarted: 'Get started',
   brainDumpTitle: 'Brain dump',
+  brainDumpHint: "Everything. All of it. Don't filter.",
+  brainDumpPlaceholder: 'Start anywhere…',
+  brainDumpFooter: 'Axel will find what matters most',
   focusTitle: "Here's your one thing",
+  focusLabel: 'Right now, just this:',
+  focusCheckInNow: "I'll do this now",
+  focusNeedMoment: 'I need a moment first',
   navFocus: 'Focus',
   continueHome: 'Continue',
   thatsEverything: "That's everything",
   everythingElseIsHeld: 'Everything else is held.',
+  heldSeeFullDump: 'See full dump',
+  heldSeeSummary: 'See summary',
   checkinQuestion: 'Did that help you move?',
   checkinYes: 'Yes',
   checkinALittle: 'A little',
   checkinNotYet: 'Not yet',
+  checkinAckYes: "Good. That's real movement.",
+  checkinAckALittle: "That's okay. It still counts.",
+  checkinAckNotYet: "That's information, not failure. Start again whenever you're ready.",
   voiceUnsupported: 'Voice input is not available in this browser.',
   emptyState: "You're here now.",
+  errorBoundaryTitle: 'Something went quiet.',
+  errorBoundaryBody: 'Axel hit a snag. Your data on this device is still here when you are ready.',
+  errorBoundaryRetry: 'Start again',
 
   navHome: 'Home',
   navTools: 'Tools',
@@ -102,4 +117,8 @@ export const COPY = {
 
 export function returnReadyKey(dumpId: string): string {
   return `axel-return-at-${dumpId}`
+}
+
+export function focusPausedKey(dumpId: string): string {
+  return `axel-focus-paused-${dumpId}`
 }

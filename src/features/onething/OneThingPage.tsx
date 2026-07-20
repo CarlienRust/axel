@@ -1,11 +1,12 @@
 import { Alert, Box, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { FocusCard } from '../../components/brand/ContentCards'
+import { CalmButton } from '../../components/shared/CalmButton'
 import { CenteredScreen } from '../../components/shared/CenteredScreen'
 import { HeldListDialog } from '../../components/shared/HeldListDialog'
 import { PageHeader } from '../../components/layout/PageLayout'
-import { COPY, returnReadyKey } from '../../constants/copy'
+import { COPY, focusPausedKey, returnReadyKey } from '../../constants/copy'
 import { RETURN_DELAY_MS } from '../../constants/timing'
 import { getDump, getResponseByDumpId } from '../../services/storage'
 import { heldItemsFromDump, parseAxelAiResponse } from '../../types/gemini'
@@ -16,6 +17,7 @@ export function OneThingPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const [heldOpen, setHeldOpen] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const fromDump = (location.state as { fromDump?: boolean } | null)?.fromDump === true
 
   const dump = dumpId ? getDump(dumpId) : undefined
@@ -23,6 +25,8 @@ export function OneThingPage() {
 
   useEffect(() => {
     if (!dumpId || !fromDump) return
+
+    sessionStorage.removeItem(focusPausedKey(dumpId))
 
     const key = returnReadyKey(dumpId)
     const existing = sessionStorage.getItem(key)
@@ -32,9 +36,25 @@ export function OneThingPage() {
 
     const returnAt = Number(sessionStorage.getItem(key))
     const delay = Math.max(0, returnAt - Date.now())
-    const timer = setTimeout(() => navigate(`/return/${dumpId}`), delay)
-    return () => clearTimeout(timer)
+    timerRef.current = setTimeout(() => navigate(`/return/${dumpId}`), delay)
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+    }
   }, [dumpId, fromDump, navigate])
+
+  function goToCheckIn() {
+    if (!dumpId) return
+    if (timerRef.current) clearTimeout(timerRef.current)
+    sessionStorage.removeItem(focusPausedKey(dumpId))
+    sessionStorage.setItem(returnReadyKey(dumpId), '0')
+    navigate(`/return/${dumpId}`)
+  }
+
+  function stayOnFocus() {
+    if (!dumpId) return
+    if (timerRef.current) clearTimeout(timerRef.current)
+    sessionStorage.setItem(focusPausedKey(dumpId), '1')
+  }
 
   if (!dumpId || !response || !dump) {
     return (
@@ -63,8 +83,8 @@ export function OneThingPage() {
 
   return (
     <CenteredScreen align="top">
-      <PageHeader title={COPY.focusTitle} />
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <PageHeader title={COPY.focusTitle} subtitle={COPY.focusLabel} />
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, pb: 10 }}>
         {ai.crisisFlag && (
           <Alert severity="warning" sx={{ textAlign: 'left' }}>
             If you're in crisis, please reach SADAG at 0800 21 22 23 or talk to someone you
@@ -103,9 +123,25 @@ export function OneThingPage() {
         >
           {COPY.everythingElseIsHeld}
         </Typography>
+
+        {fromDump && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mt: 2 }}>
+            <CalmButton variant="contained" fullWidth onClick={goToCheckIn}>
+              {COPY.focusCheckInNow}
+            </CalmButton>
+            <CalmButton variant="text" fullWidth onClick={stayOnFocus}>
+              {COPY.focusNeedMoment}
+            </CalmButton>
+          </Box>
+        )}
       </Box>
 
-      <HeldListDialog open={heldOpen} onClose={() => setHeldOpen(false)} items={heldItems} />
+      <HeldListDialog
+        open={heldOpen}
+        onClose={() => setHeldOpen(false)}
+        items={heldItems}
+        fullDumpContent={dump.content}
+      />
     </CenteredScreen>
   )
 }

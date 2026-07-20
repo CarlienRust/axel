@@ -25,11 +25,13 @@ function getSpeechRecognition(): SpeechRecognitionConstructor | null {
 export function useVoiceInput(onTranscript: (text: string) => void) {
   const recognitionRef = useRef<SpeechRecognitionInstance | null>(null)
   const [isListening, setIsListening] = useState(false)
+  const [interimText, setInterimText] = useState('')
   const supported = getSpeechRecognition() !== null
 
   const stop = useCallback(() => {
     recognitionRef.current?.stop()
     setIsListening(false)
+    setInterimText('')
   }, [])
 
   const start = useCallback(() => {
@@ -38,17 +40,33 @@ export function useVoiceInput(onTranscript: (text: string) => void) {
 
     const recognition = new SpeechRecognition()
     recognition.continuous = true
-    recognition.interimResults = false
+    recognition.interimResults = true
     recognition.lang = 'en-ZA'
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const last = event.results[event.results.length - 1]
-      const transcript = last?.[0]?.transcript?.trim()
-      if (transcript) onTranscript(transcript)
+      let interim = ''
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const result = event.results[i]
+        const transcript = result?.[0]?.transcript?.trim()
+        if (!transcript) continue
+        if (result.isFinal) {
+          onTranscript(transcript)
+          setInterimText('')
+        } else {
+          interim += transcript
+        }
+      }
+      if (interim) setInterimText(interim)
     }
 
-    recognition.onerror = () => setIsListening(false)
-    recognition.onend = () => setIsListening(false)
+    recognition.onerror = () => {
+      setIsListening(false)
+      setInterimText('')
+    }
+    recognition.onend = () => {
+      setIsListening(false)
+      setInterimText('')
+    }
 
     recognitionRef.current = recognition
     recognition.start()
@@ -60,5 +78,5 @@ export function useVoiceInput(onTranscript: (text: string) => void) {
     else start()
   }, [isListening, start, stop])
 
-  return { supported, isListening, toggle, stop }
+  return { supported, isListening, interimText, toggle, stop }
 }
