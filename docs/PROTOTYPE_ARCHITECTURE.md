@@ -62,11 +62,12 @@ Journal-informed AI reflection + guided prompts + copy summary. Clinical adviser
 | `/dump` | Brain dump |
 | `/response/:dumpId` | Focus |
 | `/return/:dumpId` | Check-in + reframe |
-| `/tools` | Tools hub (Focus, Ground, Prep) |
+| `/tools` | Landing tools hub (Reframe, Ground, Preparation) |
+| `/reframe` | Browse reframes |
 | `/library` | Resume flow + brain dump + recent entries |
-| `/profile` | Journal + profile |
+| `/profile` | Avatar, week overview, journal, settings |
 | `/ground` | Ground tools (from Tools) |
-| `/prep` | Prepare (from Tools) |
+| `/prep` | Preparation (from Tools) |
 | `/journal` | Redirects to `/profile` |
 
 **Bottom navigation (4 tabs)**
@@ -74,11 +75,11 @@ Journal-informed AI reflection + guided prompts + copy summary. Clinical adviser
 | Tab | Purpose |
 |-----|---------|
 | Home | Welcome and start brain dump |
-| Tools | Focus, Ground, and Prep |
+| Tools | Reframe, Ground, Preparation (+ active Focus when in session) |
 | Library | Pick up where you left off; brain dump shortcut; recent entries |
-| Profile | Full journal |
+| Profile | Week stats, journal, background settings |
 
-Core loop screens (`/dump`, `/response`, `/return`) stay reachable from Home and Library without extra tabs.
+Background splash options from `docs/background_moodboard.png` — selectable in Profile → Settings.
 
 ---
 

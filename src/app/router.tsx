@@ -5,6 +5,7 @@ import SpaOutlinedIcon from '@mui/icons-material/SpaOutlined'
 import { BottomNavigation, BottomNavigationAction, Box, Paper } from '@mui/material'
 import type { ReactElement } from 'react'
 import { useLocation, useNavigate, Routes, Route, Navigate } from 'react-router-dom'
+import { AppBackground } from '../components/brand/AppBackground'
 import { COPY } from '../constants/copy'
 import { DumpPage } from '../features/dump/DumpPage'
 import { EntryPage } from '../features/entry/EntryPage'
@@ -14,6 +15,7 @@ import { LibraryPage } from '../features/library/LibraryPage'
 import { OneThingPage } from '../features/onething/OneThingPage'
 import { PrepPage } from '../features/prep/PrepPage'
 import { ProfilePage } from '../features/profile/ProfilePage'
+import { ReframePage } from '../features/reframe/ReframePage'
 import { ReturnPage } from '../features/return/ReturnPage'
 import { ToolsHubPage } from '../features/tools/ToolsHubPage'
 
@@ -32,7 +34,14 @@ const navItems: NavItem[] = [
 
 function navIndex(pathname: string): number {
   if (pathname === '/' || pathname === '/dump') return 0
-  if (pathname === '/tools' || pathname === '/ground' || pathname === '/prep') return 1
+  if (
+    pathname === '/tools' ||
+    pathname === '/ground' ||
+    pathname === '/prep' ||
+    pathname === '/reframe'
+  ) {
+    return 1
+  }
   if (pathname === '/library' || pathname.startsWith('/response/') || pathname.startsWith('/return/')) {
     return 2
   }
@@ -50,14 +59,16 @@ function AppLayout() {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', bgcolor: 'background.default' }}>
-      <Box sx={{ flex: 1, pb: 8 }}>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+      <AppBackground />
+      <Box sx={{ flex: 1, pb: 8, position: 'relative', zIndex: 1 }}>
         <Routes>
           <Route path="/" element={<EntryPage />} />
           <Route path="/dump" element={<DumpPage />} />
           <Route path="/response/:dumpId" element={<OneThingPage />} />
           <Route path="/return/:dumpId" element={<ReturnPage />} />
           <Route path="/tools" element={<ToolsHubPage />} />
+          <Route path="/reframe" element={<ReframePage />} />
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/journal" element={<JournalPage />} />
@@ -73,6 +84,7 @@ function AppLayout() {
           bottom: 0,
           left: 0,
           right: 0,
+          zIndex: 2,
           bgcolor: 'background.paper',
           borderTop: 1,
           borderColor: 'divider',

@@ -22,11 +22,17 @@ export const COPY = {
   navLibrary: 'Library',
   navProfile: 'Profile',
 
-  toolsTitle: 'Tools',
-  toolsSubtitle: 'Support for when you need to focus, ground, or prepare.',
+  toolsTitle: 'Landing tools',
+  toolsSubtitle: 'Calm support when the noise is too much.',
   toolsFocusEmpty: 'Start with a brain dump from Home or Library. Axel will hold one thing for you.',
+  toolsReframeDesc: '2–3 minutes',
   toolsGroundDesc: 'Breath, anchor, and postpone',
-  toolsPrepDesc: 'Organise your experience in your own words',
+  toolsPrepDesc: 'Build your picture over time',
+
+  reframeTitle: 'Reframe',
+  reframeSubtitle: 'A gentle reminder when shame or stuckness shows up.',
+  reframeNext: 'Next',
+  reframeBackTools: 'Back to tools',
 
   libraryTitle: 'Library',
   librarySubtitle: 'Pick up where you left off.',
@@ -37,16 +43,24 @@ export const COPY = {
   librarySeeAllJournal: 'All entries in Profile',
 
   profileTitle: 'Profile',
-  profileGreetingMorning: 'Good morning.',
-  profileGreetingAfternoon: 'Good afternoon.',
-  profileGreetingEvening: 'Good evening.',
+  profileGreetingMorning: 'Good morning,',
+  profileGreetingAfternoon: 'Good afternoon,',
+  profileGreetingEvening: 'Good evening,',
+  profileThisWeek: 'This week',
+  profileStatDumps: 'Brain dumps',
+  profileStatReflections: 'Reflections',
+  profileStatTools: 'Tools used',
+  profileQuote:
+    "Clarity isn't about having all the answers. It's about focusing on the next right step.",
+  settingsTitle: 'Settings',
+  settingsBackgroundLabel: 'Background style',
 
   journalTitle: 'Journal',
   journalSubtitle: 'Your brain dumps and one things — private, date-stamped, no analysis.',
   journalEmpty: 'Your journal fills as you use Axel. Complete a brain dump to see your first entry.',
 
   groundTitle: 'Ground',
-  groundSubtitle: 'Three tools for when the noise is too much.',
+  groundSubtitle: 'Take a breath, reset your body, ground your mind.',
   groundBreath: 'Take a breath',
   groundBreathDesc: '1–2 minutes',
   groundAnchor: 'Ground your mind',
@@ -71,7 +85,7 @@ export const COPY = {
   postponeStart: 'Postpone everything by 20 minutes',
   postponeCancel: 'End early',
 
-  prepTitle: 'Prepare',
+  prepTitle: 'Preparation',
   prepSubtitle: 'Organise your experience in your own words — for when you are ready to seek support.',
   prepReflect: 'Reflect on my journal',
   prepReflecting: 'Reading your journal…',

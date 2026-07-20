@@ -1,5 +1,6 @@
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined'
 import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrongOutlined'
+import FormatQuoteOutlinedIcon from '@mui/icons-material/FormatQuoteOutlined'
 import SpaOutlinedIcon from '@mui/icons-material/SpaOutlined'
 import { Box, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
@@ -14,32 +15,22 @@ export function ToolsHubPage() {
 
   return (
     <ScreenShell title={COPY.toolsTitle} subtitle={COPY.toolsSubtitle}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-        {session ? (
-          <ToolListCard
-            title={COPY.navFocus}
-            description={session.oneThing}
-            icon={<CenterFocusStrongOutlinedIcon />}
-            onClick={() => navigate(`/response/${session.dumpId}`)}
-          />
-        ) : (
-          <Box
-            sx={{
-              p: 2,
-              borderRadius: '16px',
-              border: 1,
-              borderColor: 'divider',
-              bgcolor: 'background.paper',
-            }}
-          >
-            <Typography variant="body1" fontWeight={600} gutterBottom>
-              {COPY.navFocus}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {COPY.toolsFocusEmpty}
-            </Typography>
-          </Box>
-        )}
+      {session && (
+        <ToolListCard
+          title={COPY.navFocus}
+          description={session.oneThing}
+          icon={<CenterFocusStrongOutlinedIcon />}
+          onClick={() => navigate(`/response/${session.dumpId}`)}
+        />
+      )}
+
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mt: session ? 1 : 0 }}>
+        <ToolListCard
+          title={COPY.reframeTitle}
+          description={COPY.toolsReframeDesc}
+          icon={<FormatQuoteOutlinedIcon />}
+          onClick={() => navigate('/reframe')}
+        />
 
         <ToolListCard
           title={COPY.groundTitle}
@@ -55,6 +46,12 @@ export function ToolsHubPage() {
           onClick={() => navigate('/prep')}
         />
       </Box>
+
+      {!session && (
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+          {COPY.toolsFocusEmpty}
+        </Typography>
+      )}
     </ScreenShell>
   )
 }
