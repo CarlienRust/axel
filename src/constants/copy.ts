@@ -46,6 +46,8 @@ export const COPY = {
 
   reframeTitle: 'Reframe',
   reframeSubtitle: 'A gentle reminder when shame or stuckness shows up.',
+  reframeListen: 'Listen',
+  reframeStop: 'Stop',
   reframeNext: 'Next',
   reframeBackTools: 'Back to tools',
   backToTools: 'Back to tools',
@@ -113,6 +115,8 @@ export const COPY = {
   ariaVoiceRecord: 'Record voice',
   ariaVoiceStop: 'Stop recording',
   ariaVoiceListening: 'Listening',
+  ariaReframeListen: 'Read reminder aloud',
+  ariaReframeStop: 'Stop reading reminder',
 } as const
 
 export function returnReadyKey(dumpId: string): string {
