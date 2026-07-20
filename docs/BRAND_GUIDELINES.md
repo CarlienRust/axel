@@ -4,6 +4,15 @@
 
 Visual and voice reference for product, design, and engineering. For prototype implementation see [PROTOTYPE_ARCHITECTURE.md](./PROTOTYPE_ARCHITECTURE.md). Theme tokens live in [`src/theme/brand.ts`](../src/theme/brand.ts).
 
+**Design assets**
+
+
+| File                                                                | Use                                         |
+| ------------------------------------------------------------------- | ------------------------------------------- |
+| [axel_ui_mockup.png and axel_ui_mockup_1.png](./axel_ui_mockup.png) | Screen layouts, 4-tab bar, component style  |
+| [background_moodboard.png](./background_moodboard.png)              | App background splash variants (light mode) |
+
+
 ---
 
 **Mission**
@@ -72,36 +81,40 @@ Every screen should answer: *Does this make the user's mind quieter?* If not, re
 
 **Colour palette**
 
-| Role | Name | HEX | Use |
-|------|------|-----|-----|
-| Primary | Forest Sage | `#4F6F62` | Buttons, links, highlights |
-| Primary dark | Deep Forest | `#3C554B` | Hover, pressed, navigation selected |
-| Background | Warm Linen | `#F6F3EE` | App background — never pure white |
-| Surface | White | `#FFFFFF` | Cards, sheets, dialogs, inputs |
-| Accent | Soft Ochre | `#C9A86A` | Selected items, small positive emphasis — use sparingly |
-| Success | Sage | `#6F9B83` | Success states |
-| Warning | Clay | `#C98A52` | Warnings |
-| Error | Terracotta | `#B86452` | Errors — informative, never alarming |
-| Text primary | — | `#23312D` | Body copy |
-| Text secondary | — | `#5F6B67` | Supporting copy |
-| Text muted | — | `#8A938E` | Captions, hints |
-| Border | — | `#E7E3DC` | Dividers, outlines |
-| Disabled | — | `#B8C0BC` | Disabled controls |
+
+| Role           | Name        | HEX       | Use                                                     |
+| -------------- | ----------- | --------- | ------------------------------------------------------- |
+| Primary        | Forest Sage | `#4F6F62` | Buttons, links, highlights                              |
+| Primary dark   | Deep Forest | `#3C554B` | Hover, pressed, navigation selected                     |
+| Background     | Warm Linen  | `#F6F3EE` | App background — never pure white                       |
+| Surface        | White       | `#FFFFFF` | Cards, sheets, dialogs, inputs                          |
+| Accent         | Soft Ochre  | `#C9A86A` | Selected items, small positive emphasis — use sparingly |
+| Success        | Sage        | `#6F9B83` | Success states                                          |
+| Warning        | Clay        | `#C98A52` | Warnings                                                |
+| Error          | Terracotta  | `#B86452` | Errors — informative, never alarming                    |
+| Text primary   | —           | `#23312D` | Body copy                                               |
+| Text secondary | —           | `#5F6B67` | Supporting copy                                         |
+| Text muted     | —           | `#8A938E` | Captions, hints                                         |
+| Border         | —           | `#E7E3DC` | Dividers, outlines                                      |
+| Disabled       | —           | `#B8C0BC` | Disabled controls                                       |
+
 
 ---
 
 **Typography**
 
-Primary typeface: **Inter** (alternatives: Manrope, Atkinson Hyperlegible Next).
+Primary typeface: **Inter** (body, UI). Logo wordmark: **Lora** serif (“Axel.”). Alternatives: Manrope, Atkinson Hyperlegible Next.
 
-| Scale | Size (px) | Use |
-|-------|-----------|-----|
-| Display | 40 | Hero focus text |
-| Heading | 32 | Screen titles |
-| Section | 24 | Section headers |
-| Body | 17 | Default reading |
-| Caption | 15 | Secondary, metadata |
-| Button | 16 semi-bold | Actions |
+
+| Scale   | Size (px)    | Use                 |
+| ------- | ------------ | ------------------- |
+| Display | 40           | Hero focus text     |
+| Heading | 32           | Screen titles       |
+| Section | 24           | Section headers     |
+| Body    | 17           | Default reading     |
+| Caption | 15           | Secondary, metadata |
+| Button  | 16 semi-bold | Actions             |
+
 
 Avoid tiny fonts. Users experiencing overwhelm should never struggle to read.
 
@@ -109,12 +122,14 @@ Avoid tiny fonts. Users experiencing overwhelm should never struggle to read.
 
 **Shape and elevation**
 
-| Element | Radius |
-|---------|--------|
-| Cards | 20px |
-| Buttons | 16px |
-| Inputs | 16px |
-| Dialogs | 24px |
+
+| Element | Radius              |
+| ------- | ------------------- |
+| Cards   | 20px                |
+| Buttons | Pill (full capsule) |
+| Inputs  | 16px                |
+| Dialogs | 24px                |
+
 
 Prefer borders over shadows. If shadows are used: extremely soft, low opacity, large blur. Nothing should visually compete for attention.
 
@@ -132,6 +147,8 @@ Avoid bouncing, spring effects, and flashy transitions. Honour `prefers-reduced-
 
 Rounded outline icons. Consistent stroke. Simple, readable. No decorative icons.
 
+**Navigation:** four bottom tabs only — Home, Tools, Library, Profile. Tool flows (Ground, Reframe, Preparation) use a back arrow to Tools, not an extra tab.
+
 Whitespace is a feature. Large spacing over dense layouts. One primary action per screen. Reduce decisions, visual competition, and noise.
 
 ---
@@ -142,12 +159,14 @@ We are: calm, warm, honest, supportive, evidence-based, plain language.
 
 We are not: cheerleaders, corporate, clinical, patronising, overly emotional, productivity obsessed.
 
-| Instead of | Write |
-|------------|-------|
-| "You failed to…" | "Let's try another way." |
+
+| Instead of                 | Write                                         |
+| -------------------------- | --------------------------------------------- |
+| "You failed to…"           | "Let's try another way."                      |
 | "Complete all your tasks." | "Let's find the one thing that matters most." |
-| "You're behind." | "You're here now." |
-| "Boost productivity." | "Reduce the noise." |
+| "You're behind."           | "You're here now."                            |
+| "Boost productivity."      | "Reduce the noise."                           |
+
 
 ---
 

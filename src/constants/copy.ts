@@ -33,6 +33,7 @@ export const COPY = {
   reframeSubtitle: 'A gentle reminder when shame or stuckness shows up.',
   reframeNext: 'Next',
   reframeBackTools: 'Back to tools',
+  backToTools: 'Back to tools',
 
   libraryTitle: 'Library',
   librarySubtitle: 'Pick up where you left off.',
@@ -61,6 +62,9 @@ export const COPY = {
 
   groundTitle: 'Ground',
   groundSubtitle: 'Take a breath, reset your body, ground your mind.',
+  groundTabBreath: 'Breath',
+  groundTabAnchor: 'Anchor',
+  groundTabPostpone: 'Postpone',
   groundBreath: 'Take a breath',
   groundBreathDesc: '1–2 minutes',
   groundAnchor: 'Ground your mind',

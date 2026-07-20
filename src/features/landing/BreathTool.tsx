@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { CalmButton } from '../../components/shared/CalmButton'
 import { COPY } from '../../constants/copy'
 
@@ -22,7 +22,7 @@ const phaseScale: Record<BreathPhase, number> = {
   holdOut: 0.75,
 }
 
-export function BreathTool() {
+export function useBreathTool() {
   const [active, setActive] = useState(false)
   const [phaseIndex, setPhaseIndex] = useState(0)
   const phase = PHASES[phaseIndex]!
@@ -44,8 +44,8 @@ export function BreathTool() {
     }
   }
 
-  return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, py: 2 }}>
+  const content = (
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, py: 4 }}>
       <Box
         sx={{
           width: 160,
@@ -60,9 +60,14 @@ export function BreathTool() {
       <Typography variant="body1" color="text.secondary">
         {active ? phaseLabel[phase] : COPY.breathIdle}
       </Typography>
-      <CalmButton variant={active ? 'outlined' : 'contained'} onClick={handleToggle}>
-        {active ? COPY.breathStop : COPY.breathStart}
-      </CalmButton>
     </Box>
   )
+
+  const footer: ReactNode = (
+    <CalmButton variant={active ? 'outlined' : 'contained'} fullWidth onClick={handleToggle}>
+      {active ? COPY.breathStop : COPY.breathStart}
+    </CalmButton>
+  )
+
+  return { content, footer }
 }

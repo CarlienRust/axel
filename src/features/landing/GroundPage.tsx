@@ -1,52 +1,59 @@
-import AirOutlinedIcon from '@mui/icons-material/AirOutlined'
-import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlined'
-import SpaOutlinedIcon from '@mui/icons-material/SpaOutlined'
-import { Box } from '@mui/material'
+import { Box, Tab, Tabs } from '@mui/material'
 import { useState } from 'react'
-import { ToolListCard } from '../../components/brand/ToolListCard'
-import { ScreenShell } from '../../components/shared/ScreenShell'
+import { ToolScreenLayout } from '../../components/layout/ToolScreenLayout'
 import { COPY } from '../../constants/copy'
-import { AnchorTool } from './AnchorTool'
-import { BreathTool } from './BreathTool'
-import { PostponeTool } from './PostponeTool'
+import { useAnchorTool } from './AnchorTool'
+import { useBreathTool } from './BreathTool'
+import { usePostponeTool } from './PostponeTool'
 
-type GroundTool = 'breath' | 'anchor' | 'postpone'
-
-const tools = [
-  { id: 'breath' as const, title: COPY.groundBreath, description: COPY.groundBreathDesc, icon: <AirOutlinedIcon /> },
-  { id: 'anchor' as const, title: COPY.groundAnchor, description: COPY.groundAnchorDesc, icon: <SpaOutlinedIcon /> },
-  {
-    id: 'postpone' as const,
-    title: COPY.groundPostpone,
-    description: COPY.groundPostponeDesc,
-    icon: <HourglassEmptyOutlinedIcon />,
-  },
-]
+const tabLabels = [COPY.groundTabBreath, COPY.groundTabAnchor, COPY.groundTabPostpone] as const
 
 export function GroundPage() {
-  const [selected, setSelected] = useState<GroundTool | null>(null)
+  const [tab, setTab] = useState(0)
+  const breath = useBreathTool()
+  const anchor = useAnchorTool()
+  const postpone = usePostponeTool()
+  const tools = [breath, anchor, postpone]
+  const active = tools[tab]!
 
   return (
-    <ScreenShell title={COPY.groundTitle} subtitle={COPY.groundSubtitle}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-        {tools.map((tool) => (
-          <ToolListCard
-            key={tool.id}
-            title={tool.title}
-            description={tool.description}
-            icon={tool.icon}
-            selected={selected === tool.id}
-            onClick={() => setSelected(selected === tool.id ? null : tool.id)}
-          />
+    <ToolScreenLayout title={COPY.groundTitle} subtitle={COPY.groundSubtitle} footer={active.footer}>
+      <Tabs
+        value={tab}
+        onChange={(_, v) => setTab(v)}
+        variant="fullWidth"
+        sx={{
+          mb: 2,
+          minHeight: 44,
+          '& .MuiTabs-flexContainer': {
+            gap: 1,
+          },
+          '& .MuiTab-root': {
+            textTransform: 'none',
+            fontWeight: 600,
+            fontSize: '0.875rem',
+            minHeight: 44,
+            borderRadius: '999px',
+            border: 1,
+            borderColor: 'divider',
+            bgcolor: 'background.paper',
+            color: 'text.secondary',
+            '&.Mui-selected': {
+              bgcolor: 'primary.dark',
+              color: 'primary.contrastText',
+              borderColor: 'primary.dark',
+            },
+          },
+          '& .MuiTabs-indicator': {
+            display: 'none',
+          },
+        }}
+      >
+        {tabLabels.map((label) => (
+          <Tab key={label} label={label} />
         ))}
-      </Box>
-      {selected && (
-        <Box sx={{ mt: 3, pt: 3, borderTop: 1, borderColor: 'divider' }}>
-          {selected === 'breath' && <BreathTool />}
-          {selected === 'anchor' && <AnchorTool />}
-          {selected === 'postpone' && <PostponeTool />}
-        </Box>
-      )}
-    </ScreenShell>
+      </Tabs>
+      <Box key={tab}>{active.content}</Box>
+    </ToolScreenLayout>
   )
 }

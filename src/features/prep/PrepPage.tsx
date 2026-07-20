@@ -1,11 +1,11 @@
 import { Alert, Box, Paper, Snackbar, Typography } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
+import { ToolScreenLayout } from '../../components/layout/ToolScreenLayout'
 import { CalmButton } from '../../components/shared/CalmButton'
 import { CalmTextArea } from '../../components/shared/CalmTextArea'
 import { Disclaimer } from '../../components/shared/Disclaimer'
 import { LoadingState } from '../../components/shared/LoadingState'
-import { ScreenShell } from '../../components/shared/ScreenShell'
 import { COPY } from '../../constants/copy'
 import { buildJournalEntries, formatJournalForPrep } from '../journal/journalUtils'
 import { readStoreSnapshot, getLatestPrepNote, savePrepNote } from '../../services/storage'
@@ -40,7 +40,11 @@ export function PrepPage() {
   }
 
   function handleSave() {
-    savePrepNote({ ...answers, _reflection_observation: reflection?.observation ?? '', _reflection_question: reflection?.question ?? '' })
+    savePrepNote({
+      ...answers,
+      _reflection_observation: reflection?.observation ?? '',
+      _reflection_question: reflection?.question ?? '',
+    })
     setSaved(true)
   }
 
@@ -58,7 +62,27 @@ export function PrepPage() {
   const hasContent = Object.values(answers).some((v) => v.trim().length > 0) || reflection
 
   return (
-    <ScreenShell title={COPY.prepTitle} subtitle={COPY.prepSubtitle}>
+    <ToolScreenLayout
+      title={COPY.prepTitle}
+      subtitle={COPY.prepSubtitle}
+      footer={
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}>
+          {journalEntries.length > 0 && !reflectMutation.isPending && (
+            <CalmButton variant="outlined" fullWidth onClick={() => reflectMutation.mutate()}>
+              {COPY.prepReflect}
+            </CalmButton>
+          )}
+          <Box sx={{ display: 'flex', gap: 1.5, width: '100%' }}>
+            <CalmButton variant="contained" fullWidth onClick={handleSave} disabled={!hasContent}>
+              Save
+            </CalmButton>
+            <CalmButton variant="outlined" fullWidth onClick={handleExport} disabled={!hasContent}>
+              Copy summary
+            </CalmButton>
+          </Box>
+        </Box>
+      }
+    >
       <Disclaimer />
 
       {journalEntries.length === 0 ? (
@@ -67,17 +91,7 @@ export function PrepPage() {
         </Typography>
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          {reflectMutation.isPending ? (
-            <LoadingState message={COPY.prepReflecting} />
-          ) : (
-            <CalmButton
-              variant="outlined"
-              onClick={() => reflectMutation.mutate()}
-              disabled={reflectMutation.isPending}
-            >
-              {COPY.prepReflect}
-            </CalmButton>
-          )}
+          {reflectMutation.isPending && <LoadingState message={COPY.prepReflecting} />}
           {reflectMutation.isError && (
             <Alert severity="error">
               {reflectMutation.error instanceof Error ? reflectMutation.error.message : COPY.emptyState}
@@ -111,16 +125,7 @@ export function PrepPage() {
 
       {saved && <Alert severity="success">Saved on this device.</Alert>}
 
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
-        <CalmButton variant="contained" onClick={handleSave} disabled={!hasContent}>
-          Save
-        </CalmButton>
-        <CalmButton variant="outlined" onClick={handleExport} disabled={!hasContent}>
-          Copy summary
-        </CalmButton>
-      </Box>
-
       <Snackbar open={copied} autoHideDuration={3000} onClose={() => setCopied(false)} message="Summary copied" />
-    </ScreenShell>
+    </ToolScreenLayout>
   )
 }

@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CalmButton } from '../../components/shared/CalmButton'
 import { COPY } from '../../constants/copy'
@@ -13,7 +13,7 @@ function formatRemaining(ms: number): string {
   return `${min}:${sec.toString().padStart(2, '0')}`
 }
 
-export function PostponeTool() {
+export function usePostponeTool() {
   const navigate = useNavigate()
   const [endsAt, setEndsAt] = useState<number | null>(null)
   const [remaining, setRemaining] = useState(0)
@@ -35,19 +35,10 @@ export function PostponeTool() {
     return () => clearInterval(id)
   }, [endsAt, navigate])
 
-  function startPostpone() {
-    setEndsAt(Date.now() + POSTPONE_MS)
-  }
-
-  function cancelPostpone() {
-    setEndsAt(null)
-    setRemaining(0)
-  }
-
   const active = endsAt !== null
 
-  return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, py: 2 }}>
+  const content = (
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, py: 4 }}>
       <Typography variant="body1" color="text.secondary" align="center">
         {COPY.postponeDescription}
       </Typography>
@@ -56,15 +47,18 @@ export function PostponeTool() {
           {formatRemaining(remaining)}
         </Typography>
       )}
-      {!active ? (
-        <CalmButton variant="contained" onClick={startPostpone}>
-          {COPY.postponeStart}
-        </CalmButton>
-      ) : (
-        <CalmButton variant="outlined" onClick={cancelPostpone}>
-          {COPY.postponeCancel}
-        </CalmButton>
-      )}
     </Box>
   )
+
+  const footer: ReactNode = !active ? (
+    <CalmButton variant="contained" fullWidth onClick={() => setEndsAt(Date.now() + POSTPONE_MS)}>
+      {COPY.postponeStart}
+    </CalmButton>
+  ) : (
+    <CalmButton variant="outlined" fullWidth onClick={() => { setEndsAt(null); setRemaining(0) }}>
+      {COPY.postponeCancel}
+    </CalmButton>
+  )
+
+  return { content, footer }
 }
