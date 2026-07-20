@@ -1,77 +1,158 @@
 import { createTheme } from '@mui/material/styles'
+import { brand } from './brand'
 
 export const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
     primary: {
-      main: '#5b8a8a',
-      light: '#7aa3a3',
-      dark: '#456969',
-      contrastText: '#f8fafc',
+      main: brand.primary,
+      dark: brand.primaryDark,
+      contrastText: brand.surface,
     },
     secondary: {
-      main: '#94a3b8',
+      main: brand.accent,
+      contrastText: brand.textPrimary,
     },
     background: {
-      default: '#1e293b',
-      paper: '#273549',
+      default: brand.background,
+      paper: brand.surface,
     },
     text: {
-      primary: '#f1f5f9',
-      secondary: '#cbd5e1',
+      primary: brand.textPrimary,
+      secondary: brand.textSecondary,
+      disabled: brand.textMuted,
     },
-    divider: '#334155',
+    divider: brand.border,
+    success: {
+      main: brand.success,
+    },
+    warning: {
+      main: brand.warning,
+    },
+    error: {
+      main: brand.error,
+    },
   },
   typography: {
     fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
-    fontSize: 16,
-    h1: { fontSize: '2rem', fontWeight: 600, lineHeight: 1.4 },
-    h2: { fontSize: '1.5rem', fontWeight: 600, lineHeight: 1.4 },
-    h3: { fontSize: '1.25rem', fontWeight: 500, lineHeight: 1.5 },
-    body1: { fontSize: '1rem', lineHeight: 1.6 },
-    body2: { fontSize: '0.9375rem', lineHeight: 1.6 },
-    button: { textTransform: 'none', fontWeight: 500 },
+    fontSize: 17,
+    h1: {
+      fontSize: brand.font.display,
+      fontWeight: 600,
+      lineHeight: 1.3,
+      color: brand.textPrimary,
+    },
+    h2: {
+      fontSize: brand.font.heading,
+      fontWeight: 600,
+      lineHeight: 1.35,
+      color: brand.textPrimary,
+    },
+    h3: {
+      fontSize: brand.font.section,
+      fontWeight: 500,
+      lineHeight: 1.4,
+      color: brand.textPrimary,
+    },
+    body1: {
+      fontSize: brand.font.body,
+      lineHeight: 1.6,
+    },
+    body2: {
+      fontSize: brand.font.caption,
+      lineHeight: 1.6,
+    },
+    caption: {
+      fontSize: brand.font.caption,
+      lineHeight: 1.5,
+      color: brand.textMuted,
+    },
+    button: {
+      fontSize: brand.font.button,
+      fontWeight: 600,
+      textTransform: 'none',
+    },
   },
   shape: {
-    borderRadius: 12,
+    borderRadius: brand.radius.button,
   },
   spacing: 8,
+  transitions: {
+    duration: {
+      shortest: 150,
+      shorter: 200,
+      short: 250,
+    },
+    easing: {
+      easeInOut: brand.motion.easing,
+    },
+  },
   shadows: [
     'none',
-    '0 1px 2px rgba(0,0,0,0.12)',
-    '0 1px 3px rgba(0,0,0,0.14)',
-    '0 2px 4px rgba(0,0,0,0.14)',
-    '0 2px 6px rgba(0,0,0,0.16)',
-    '0 3px 8px rgba(0,0,0,0.16)',
-    '0 4px 10px rgba(0,0,0,0.18)',
-    '0 4px 12px rgba(0,0,0,0.18)',
-    '0 5px 14px rgba(0,0,0,0.2)',
-    '0 6px 16px rgba(0,0,0,0.2)',
-    '0 6px 18px rgba(0,0,0,0.22)',
-    '0 7px 20px rgba(0,0,0,0.22)',
-    '0 8px 22px rgba(0,0,0,0.24)',
-    '0 8px 24px rgba(0,0,0,0.24)',
-    '0 9px 26px rgba(0,0,0,0.26)',
-    '0 10px 28px rgba(0,0,0,0.26)',
-    '0 10px 30px rgba(0,0,0,0.28)',
-    '0 11px 32px rgba(0,0,0,0.28)',
-    '0 12px 34px rgba(0,0,0,0.3)',
-    '0 12px 36px rgba(0,0,0,0.3)',
-    '0 13px 38px rgba(0,0,0,0.32)',
-    '0 14px 40px rgba(0,0,0,0.32)',
-    '0 14px 42px rgba(0,0,0,0.34)',
-    '0 15px 44px rgba(0,0,0,0.34)',
-    '0 16px 46px rgba(0,0,0,0.36)',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
+    'none',
   ],
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundColor: brand.background,
+          color: brand.textPrimary,
+        },
+        '@media (prefers-reduced-motion: reduce)': {
+          '*': {
+            animationDuration: '0.01ms !important',
+            animationIterationCount: '1 !important',
+            transitionDuration: '0.01ms !important',
+          },
+        },
+      },
+    },
     MuiButton: {
       defaultProps: {
         disableElevation: true,
       },
       styleOverrides: {
         root: {
-          borderRadius: 12,
-          padding: '10px 20px',
+          borderRadius: brand.radius.button,
+          padding: '12px 24px',
+          minHeight: 48,
+          transition: `background-color ${brand.motion.duration} ${brand.motion.easing}`,
+        },
+        containedPrimary: {
+          '&:hover': {
+            backgroundColor: brand.primaryDark,
+          },
+        },
+        outlined: {
+          borderColor: brand.border,
+          color: brand.textPrimary,
+          '&:hover': {
+            borderColor: brand.primary,
+            backgroundColor: 'rgba(79, 111, 98, 0.04)',
+          },
         },
       },
     },
@@ -82,7 +163,17 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-root': {
-            borderRadius: 12,
+            borderRadius: brand.radius.input,
+            backgroundColor: brand.surface,
+            '& fieldset': {
+              borderColor: brand.border,
+            },
+            '&:hover fieldset': {
+              borderColor: brand.textMuted,
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: brand.primary,
+            },
           },
         },
       },
@@ -94,12 +185,104 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundImage: 'none',
+          borderRadius: brand.radius.card,
+          border: `1px solid ${brand.border}`,
         },
       },
     },
     MuiCard: {
       defaultProps: {
         elevation: 0,
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: brand.radius.dialog,
+        },
+      },
+    },
+    MuiBottomNavigation: {
+      styleOverrides: {
+        root: {
+          backgroundColor: brand.surface,
+          borderTop: `1px solid ${brand.border}`,
+        },
+      },
+    },
+    MuiBottomNavigationAction: {
+      styleOverrides: {
+        root: {
+          color: brand.textMuted,
+          minWidth: 'auto',
+          padding: '6px 8px',
+          transition: `color ${brand.motion.duration} ${brand.motion.easing}`,
+          '&.Mui-selected': {
+            color: brand.primaryDark,
+          },
+        },
+        label: {
+          fontSize: '0.6875rem',
+          fontWeight: 500,
+          '&.Mui-selected': {
+            fontSize: '0.6875rem',
+          },
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontWeight: 500,
+          fontSize: brand.font.caption,
+          minHeight: 48,
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        indicator: {
+          backgroundColor: brand.primary,
+        },
+      },
+    },
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          borderRadius: brand.radius.input,
+        },
+        standardSuccess: {
+          backgroundColor: 'rgba(111, 155, 131, 0.12)',
+          color: brand.textPrimary,
+        },
+        standardWarning: {
+          backgroundColor: 'rgba(201, 138, 82, 0.12)',
+          color: brand.textPrimary,
+        },
+        standardError: {
+          backgroundColor: 'rgba(184, 100, 82, 0.12)',
+          color: brand.textPrimary,
+        },
+        standardInfo: {
+          backgroundColor: 'rgba(79, 111, 98, 0.08)',
+          color: brand.textPrimary,
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '50%',
+          transition: `background-color ${brand.motion.duration} ${brand.motion.easing}`,
+        },
+      },
+    },
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: {
+          color: brand.primary,
+        },
       },
     },
   },

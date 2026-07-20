@@ -16,19 +16,19 @@ todos:
     status: completed
   - id: day2-prompt
     content: "Day 2: Write and test Axel prompt in Google AI Studio until 8/10 outputs feel like relief"
-    status: pending
+    status: completed
   - id: day2-api
     content: "Day 2: Implement api/gemini.ts serverless route + services/gemini.ts abstraction"
-    status: pending
+    status: completed
   - id: day3-dump
     content: "Day 3: Build dump feature — input, submit flow, local storage + Gemini mutation, navigate to response"
-    status: pending
+    status: completed
   - id: day4-onething-landing
     content: "Day 4: Build onething (response + check-in) and landing (static grounding exercises)"
-    status: pending
+    status: completed
   - id: day5-prep
     content: "Day 5: Build prep tool — guided prompts, local storage save, copy-to-clipboard summary export"
-    status: pending
+    status: completed
   - id: day6-7-test
     content: "Day 6–7: Real user test on one device, fix prompt/UX issues from observation"
     status: pending

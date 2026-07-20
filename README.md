@@ -2,27 +2,23 @@
 
 Calm, clarity and silence — in the middle of the noise.
 
-ADHD support prototype for adults in South Africa. See [docs/PROJECT_OVERVIEW.md](./docs/PROJECT_OVERVIEW.md) for product vision and [docs/PROTOTYPE_ARCHITECTURE.md](./docs/PROTOTYPE_ARCHITECTURE.md) for the prototype stack.
+## Prototype features (Phases 1–5)
+
+1. **Core loop** — Home → Brain dump → Focus → Check-in → Reframe
+2. **Journal** — date-stamped log of dumps and one-things
+3. **Ground** — Breath, Anchor, Postpone tools
+4. **Prep** — journal reflection (AI) + appointment prompts
+
+See [docs/PROTOTYPE_ARCHITECTURE.md](./docs/PROTOTYPE_ARCHITECTURE.md).
 
 ## Quick start
 
 ```bash
 npm install
+cp .env.example .env.local   # GEMINI_API_KEY
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173).
-
-## Scripts
-
-- `npm run dev` — local dev server
-- `npm run build` — production build
-- `npm run preview` — preview production build
-
-## Environment
-
-Copy `.env.example` to `.env` and add your Gemini API key when wiring AI (Day 2). The key is server-side only via Vercel.
-
 ## Deploy
 
-Push to GitHub; Vercel auto-deploys from `main`.
+Push to GitHub; Vercel auto-deploys. Set `GEMINI_API_KEY` in Vercel.

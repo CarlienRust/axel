@@ -1,4 +1,4 @@
-export type CheckinAnswer = 'yes' | 'not_yet' | 'not_sure'
+export type CheckinAnswer = 'yes' | 'a_little' | 'not_yet'
 
 export type Dump = {
   id: string

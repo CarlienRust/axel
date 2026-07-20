@@ -1,76 +1,96 @@
 # Axel — Prototype Architecture
 
-This document describes the **prototype** stack. For long-term product vision, see [PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md) and [INITIAL_ARCHITECTURE.md](./INITIAL_ARCHITECTURE.md).
+Phased prototype stack and roadmap.
 
-## Stack
+---
+
+**Related docs**
+
+| Doc | Purpose |
+|-----|---------|
+| [PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md) | Product vision and who we build for |
+| [BRAND_GUIDELINES.md](./BRAND_GUIDELINES.md) | Visual identity, voice, UI tokens |
+| [INITIAL_ARCHITECTURE.md](./INITIAL_ARCHITECTURE.md) | Long-term three-layer product |
+| [BACKGROUND.md](./BACKGROUND.md) | Research and market context |
+
+Theme implementation: [`src/theme/`](../src/theme/) (tokens in `brand.ts`, MUI in `index.ts`).
+
+---
+
+**Stack**
 
 | Layer | Choice |
 |-------|--------|
 | Frontend | React 19 + Vite + TypeScript |
-| UI | MUI v6 (theme in `src/theme/index.ts`) |
+| UI | MUI v6 + Axel brand theme (light mode, Warm Linen) |
 | Routing | React Router |
-| Data fetching | TanStack Query |
-| AI | Gemini API via Vercel serverless proxy (`api/gemini.ts`) |
-| Persistence | **Local-first** (`localStorage` via `src/services/storage.ts`) |
-| Hosting | Vercel (auto-deploy from GitHub) |
+| AI | Gemini via Vercel (`/api/gemini`, `/api/prep`) |
+| Persistence | Local-first (`localStorage`) |
+| Hosting | Vercel |
 
-## Data — local-first for prototype
+---
 
-All user data lives in the browser under the key `axel-data`. The schema mirrors the planned Supabase tables so migration later is a one-file swap in `services/storage.ts`:
+**Phase roadmap**
 
-- `dumps` — noise dump content
-- `responses` — Axel's one-thing reply per dump
-- `checkins` — "did that help you move?" answers
-- `prep_notes` — preparation tool entries
+### Phase 1 — Core loop ✅
 
-**Trade-off:** data is tied to one browser on one device until Supabase sync is added with POPIA consent.
+Entry → Brain dump → Focus → Check-in. One AI call per loop.
 
-**Prototype user:** hardcoded as `prototype-user-001` in `src/constants/user.ts`.
+### Phase 2 — Reframe ✅
 
-## Service layer
+Written paragraph after check-in. Six in rotation (`src/features/reframe/reframes.ts`).
 
-- `src/services/storage.ts` — all reads/writes (swap point for Supabase)
-- `src/services/gemini.ts` — all AI calls (swap point for Claude)
+### Phase 3 — Journal ✅
 
-Features never import Gemini or localStorage directly.
+Date-stamped log of dumps and one-things. No graphs, no pushed analysis.
 
-## Feature folders
+### Phase 4 — Ground tools ✅
+
+Breath (4-4-4-4 visual), Anchor (5-4-3-2-1), Postpone (20-minute timer).
+
+### Phase 5 — Prepare ✅
+
+Journal-informed AI reflection + guided prompts + copy summary. Clinical adviser review required before public launch.
+
+---
+
+**Routes**
+
+| Route | Screen |
+|-------|--------|
+| `/` | Home |
+| `/dump` | Brain dump |
+| `/response/:dumpId` | Focus |
+| `/return/:dumpId` | Check-in + reframe |
+| `/tools` | Tools hub (Focus, Ground, Prep) |
+| `/library` | Resume flow + brain dump + recent entries |
+| `/profile` | Journal + profile |
+| `/ground` | Ground tools (from Tools) |
+| `/prep` | Prepare (from Tools) |
+| `/journal` | Redirects to `/profile` |
+
+**Bottom navigation (4 tabs)**
+
+| Tab | Purpose |
+|-----|---------|
+| Home | Welcome and start brain dump |
+| Tools | Focus, Ground, and Prep |
+| Library | Pick up where you left off; brain dump shortcut; recent entries |
+| Profile | Full journal |
+
+Core loop screens (`/dump`, `/response`, `/return`) stay reachable from Home and Library without extra tabs.
+
+---
+
+**Environment**
 
 ```
-src/features/
-  dump/       — noise dump input
-  onething/   — Axel response + check-in
-  landing/    — grounding tools
-  prep/       — appointment preparation
+GEMINI_API_KEY=
+GEMINI_MODEL=
 ```
 
-## MUI theme direction
+---
 
-- Deep slate background, muted sage/teal accent
-- Inter font, 16px base, generous line height
-- 12px border radius, flat elevation, generous spacing
-- Calm, trustworthy — not clinical, not flashy
+**Deferred**
 
-## Environment variables
-
-```
-GEMINI_API_KEY=    # server-side only (Vercel), no VITE_ prefix
-```
-
-## Build sequence
-
-1. **Day 1** — scaffold, theme, storage layer, app shell, deploy
-2. **Day 2** — Axel prompt in Google AI Studio, wire Gemini API
-3. **Days 3–5** — four feature screens
-4. **Day 6** — one real user test (single device)
-5. **Day 7** — fix what broke
-
-## Deferred
-
-- Supabase / cloud sync
-- Authentication
-- Journal (phase 3)
-- i18n (English + Afrikaans at launch in full product)
-- PWA offline mode
-- POPIA consent UI (required before cloud sync)
-- Subscription / monetization
+Supabase sync, auth, POPIA consent UI, i18n, dark mode, PWA offline, monetization.

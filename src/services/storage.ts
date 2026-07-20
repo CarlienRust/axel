@@ -27,6 +27,10 @@ function readStore(): AxelStore {
   }
 }
 
+export function readStoreSnapshot(): AxelStore {
+  return readStore()
+}
+
 function writeStore(store: AxelStore): void {
   localStorage.setItem(STORE_KEY, JSON.stringify(store))
 }
@@ -96,6 +100,16 @@ export function getRecentDumps(limit = 10): Dump[] {
     .slice(0, limit)
 }
 
+/** Most recent dump that has an Axel response — for dev nav preview */
+export function getLatestDumpIdWithResponse(): string | undefined {
+  const store = readStore()
+  const responseDumpIds = new Set(store.responses.map((r) => r.dump_id))
+  const latest = store.dumps
+    .filter((d) => responseDumpIds.has(d.id))
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0]
+  return latest?.id
+}
+
 export function savePrepNote(content: Record<string, string>): PrepNote {
   const store = readStore()
   const note: PrepNote = {
@@ -113,6 +127,14 @@ export function getPrepNotes(): PrepNote[] {
   return readStore().prep_notes.sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
   )
+}
+
+export function getCheckinByResponseId(responseId: string): Checkin | undefined {
+  return readStore().checkins.find((c) => c.response_id === responseId)
+}
+
+export function getLatestPrepNote(): PrepNote | undefined {
+  return getPrepNotes()[0]
 }
 
 /** Round-trip test helper for Day 1 verification */
