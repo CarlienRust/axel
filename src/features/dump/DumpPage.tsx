@@ -3,17 +3,16 @@ import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CircularMicButton } from '../../components/brand/CircularMicButton'
-import {
-  VoiceTextToggle,
-  WaveformDecoration,
-  type InputMode,
-} from '../../components/brand/VoiceTextToggle'
+import { BrainDumpProgressIllustration } from '../../components/brand/BrainDumpProgressIllustration'
+import { VoiceTextToggle, type InputMode } from '../../components/brand/VoiceTextToggle'
 import { CalmButton } from '../../components/shared/CalmButton'
 import { CalmTextArea } from '../../components/shared/CalmTextArea'
+import { VoiceTextArea } from '../../components/shared/VoiceTextArea'
 import { CenteredScreen } from '../../components/shared/CenteredScreen'
 import { LoadingState } from '../../components/shared/LoadingState'
 import { PageHeader } from '../../components/layout/PageLayout'
 import { COPY } from '../../constants/copy'
+import { layout } from '../../theme/layout'
 import { useVoiceInput } from '../../hooks/useVoiceInput'
 import { generateOneThing } from '../../services/gemini'
 import { createDump, createResponse } from '../../services/storage'
@@ -53,7 +52,7 @@ export function DumpPage() {
   const textLen = displayContent.trim().length
   const baseProgress = Math.min(textLen / 120, 0.85)
   const activeBoost = isListening ? 0.1 : 0
-  const threadProgress = Math.min(baseProgress + activeBoost, 1)
+  const dumpProgress = Math.min(baseProgress + activeBoost, 1)
 
   const canSubmit = content.trim().length > 0 && !mutation.isPending
 
@@ -72,25 +71,27 @@ export function DumpPage() {
 
   return (
     <CenteredScreen align="top">
-      <PageHeader title={COPY.noiseDumpTitle} subtitle={COPY.noiseDumpHint} />
+      <PageHeader title={COPY.brainDumpTitle} subtitle={COPY.brainDumpHint} />
       <Box
         component="form"
         onSubmit={handleSubmit}
-        sx={{ display: 'flex', flexDirection: 'column', gap: 3, minHeight: 'calc(100vh - 200px)' }}
+        sx={{ display: 'flex', flexDirection: 'column', gap: layout.sectionGap }}
       >
         {mode === 'voice' && supported ? (
           <Box
             sx={{
-              flex: 1,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
-              gap: 4,
-              py: 4,
+              gap: layout.sectionGap,
+              py: 2,
+              width: '100%',
             }}
           >
-            <WaveformDecoration active={isListening} progress={threadProgress} />
+            <BrainDumpProgressIllustration
+              progress={dumpProgress}
+              active={isListening}
+            />
             <CircularMicButton isListening={isListening} onClick={toggle} />
             {(content.trim().length > 0 || interimText) && (
               <Paper sx={{ p: 2, width: '100%', bgcolor: 'background.paper' }}>
@@ -99,7 +100,7 @@ export function DumpPage() {
                   onChange={(e) => setContent(e.target.value)}
                   minRows={3}
                   slotProps={{
-                    htmlInput: { 'aria-label': COPY.noiseDumpTitle, readOnly: isListening },
+                    htmlInput: { 'aria-label': COPY.brainDumpTitle, readOnly: isListening },
                   }}
                 />
               </Paper>
@@ -107,13 +108,13 @@ export function DumpPage() {
           </Box>
         ) : (
           <Paper sx={{ p: 0.5, bgcolor: 'background.paper', flex: 1 }}>
-            <CalmTextArea
+            <VoiceTextArea
               value={content}
               onChange={(e) => setContent(e.target.value)}
               minRows={10}
               placeholder={COPY.brainDumpPlaceholder}
               slotProps={{
-                htmlInput: { 'aria-label': COPY.noiseDumpTitle },
+                htmlInput: { 'aria-label': COPY.brainDumpTitle },
               }}
               sx={{
                 '& .MuiOutlinedInput-root fieldset': { border: 'none' },
@@ -131,12 +132,12 @@ export function DumpPage() {
           </Alert>
         )}
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 'auto', pb: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: layout.stackGap, pt: 1 }}>
           {supported && <VoiceTextToggle mode={mode} onChange={setMode} />}
           <CalmButton type="submit" variant="contained" fullWidth disabled={!canSubmit}>
             {COPY.thatsEverything}
           </CalmButton>
-          <Typography variant="caption" color="text.secondary" align="center" sx={{ opacity: 0.75 }}>
+          <Typography variant="caption" color="text.secondary" align="center" sx={{ opacity: 0.75, mt: 0.5 }}>
             {COPY.brainDumpFooter}
           </Typography>
         </Box>

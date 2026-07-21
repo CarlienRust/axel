@@ -1,11 +1,9 @@
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
-import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined'
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined'
 import { BottomNavigation, BottomNavigationAction, Box, Paper } from '@mui/material'
 import type { ReactElement } from 'react'
 import { useLocation, useNavigate, Routes, Route, Navigate } from 'react-router-dom'
 import { AppBackground } from '../components/brand/AppBackground'
+import { renderFeatureIcon } from '../components/brand/featureIcons'
 import { COPY } from '../constants/copy'
 import { DumpPage } from '../features/dump/DumpPage'
 import { EntryPage } from '../features/entry/EntryPage'
@@ -28,10 +26,10 @@ type NavItem = {
 }
 
 const navItems: NavItem[] = [
-  { label: COPY.navHome, icon: <HomeOutlinedIcon />, path: '/' },
+  { label: COPY.navHome, icon: renderFeatureIcon('home'), path: '/' },
   { label: COPY.navTools, icon: <ForumOutlinedIcon />, path: '/tools' },
-  { label: COPY.navLibrary, icon: <MenuBookOutlinedIcon />, path: '/library' },
-  { label: COPY.navProfile, icon: <PersonOutlineIcon />, path: '/profile' },
+  { label: COPY.navLibrary, icon: renderFeatureIcon('library'), path: '/library' },
+  { label: COPY.navProfile, icon: renderFeatureIcon('profile'), path: '/profile' },
 ]
 
 function navIndex(pathname: string): number {

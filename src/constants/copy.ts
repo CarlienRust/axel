@@ -61,9 +61,6 @@ export const COPY = {
   nameItHint: 'No fixing. Just name it.',
   backToLandingTools: 'Back to landing tools',
 
-  noiseDumpTitle: 'Noise dump',
-  noiseDumpHint: "Anything on your mind. Get it out. We'll handle the rest.",
-
   reframeTitle: 'Reframe',
   reframeSubtitle: 'A gentle reminder when shame or stuckness shows up.',
   reframeListen: 'Listen',

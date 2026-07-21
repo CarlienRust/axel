@@ -7,6 +7,7 @@ import { CalmButton } from '../../components/shared/CalmButton'
 import { CenteredScreen } from '../../components/shared/CenteredScreen'
 import { PageHeader } from '../../components/layout/PageLayout'
 import { COPY, returnReadyKey } from '../../constants/copy'
+import { layout } from '../../theme/layout'
 import { getNextReframe, peekReframe } from '../reframe/reframeRotation'
 import type { Reframe } from '../reframe/reframes'
 import { createCheckin, getCheckinByResponseId, getResponseByDumpId } from '../../services/storage'
@@ -93,7 +94,7 @@ export function ReturnPage() {
   return (
     <CenteredScreen align="top">
       <PageHeader title={COPY.checkinQuestion} />
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, justifyContent: 'center' }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: layout.stackGap, justifyContent: 'center' }}>
         {checkinOptions.map((option) => (
           <CalmButton
             key={option.value}

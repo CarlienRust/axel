@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import type { ReactNode } from 'react'
+import { layout } from '../../theme/layout'
 
 type CenteredScreenProps = {
   children: ReactNode
@@ -16,12 +17,13 @@ export function CenteredScreen({ children, align = 'center' }: CenteredScreenPro
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: align === 'center' ? 'center' : 'flex-start',
-        px: 3,
-        py: align === 'center' ? 4 : 3,
+        px: layout.px,
+        pt: align === 'center' ? layout.sectionGap : layout.pt,
+        pb: align === 'center' ? layout.sectionGap : layout.pbNav,
         position: 'relative',
       }}
     >
-      <Box sx={{ width: '100%', maxWidth: 480 }}>{children}</Box>
+      <Box sx={{ width: '100%', maxWidth: layout.maxWidth }}>{children}</Box>
     </Box>
   )
 }

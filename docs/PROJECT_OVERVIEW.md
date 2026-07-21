@@ -22,7 +22,7 @@ This person is enough. They always were.
 
 **What Axel does — and only this**
 
-One. The noise dump. Open Axel when everything is loud. Pour it all in — voice, text, whatever. Axel listens, sorts, and hands back one thing. Not a list. The one most important thing right now. Everything else is held safely.
+One. The brain dump. Open Axel when everything is loud. Pour it all in — voice, text, whatever. Axel listens, sorts, and hands back one thing. Not a list. The one most important thing right now. Everything else is held safely.
 
 Two. The reframe. Short, honest, plain-language content that shifts how they see themselves. Not motivational. Not clinical. Grounded in real research about how the ADHD brain works and what it's genuinely capable of.
 

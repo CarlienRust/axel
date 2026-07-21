@@ -23,6 +23,7 @@ export function ReframePage() {
     <ToolScreenLayout
       title={COPY.reframeTitle}
       subtitle={COPY.reframeSubtitle}
+      illustration="reframe"
       footer={
         <Box sx={{ display: 'flex', gap: 1.5, width: '100%' }}>
           {supported && (
@@ -41,9 +42,7 @@ export function ReframePage() {
         </Box>
       }
     >
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, py: 2 }}>
-        <QuoteBlock>{reframe.body}</QuoteBlock>
-      </Box>
+      <QuoteBlock>{reframe.body}</QuoteBlock>
     </ToolScreenLayout>
   )
 }

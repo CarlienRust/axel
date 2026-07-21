@@ -7,6 +7,7 @@ import { CenteredScreen } from '../../components/shared/CenteredScreen'
 import { HeldListDialog } from '../../components/shared/HeldListDialog'
 import { PageHeader } from '../../components/layout/PageLayout'
 import { COPY, focusPausedKey, returnReadyKey } from '../../constants/copy'
+import { layout } from '../../theme/layout'
 import { RETURN_DELAY_MS } from '../../constants/timing'
 import { getDump, getResponseByDumpId } from '../../services/storage'
 import { heldItemsFromDump, parseAxelAiResponse } from '../../types/gemini'
@@ -84,7 +85,7 @@ export function OneThingPage() {
   return (
     <CenteredScreen align="top">
       <PageHeader title={COPY.focusTitle} subtitle={COPY.focusLabel} />
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, pb: 10 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: layout.sectionGap }}>
         {ai.crisisFlag && (
           <Alert severity="warning" sx={{ textAlign: 'left' }}>
             If you're in crisis, please reach SADAG at 0800 21 22 23 or talk to someone you
@@ -125,7 +126,7 @@ export function OneThingPage() {
         </Typography>
 
         {fromDump && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mt: 2 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: layout.stackGap, pt: 1 }}>
             <CalmButton variant="contained" fullWidth onClick={goToCheckIn}>
               {COPY.focusCheckInNow}
             </CalmButton>

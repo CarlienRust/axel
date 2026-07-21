@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import chaosIllustration from '../../assets/images/chaos.png'
 import { AxelLogo } from '../../components/brand/AxelLogo'
-import { ThreadIllustration } from '../../components/brand/ThreadIllustration'
 import { CalmButton } from '../../components/shared/CalmButton'
 import { COPY } from '../../constants/copy'
 import { brand } from '../../theme/brand'
@@ -42,11 +42,23 @@ export function EntryPage() {
         <AxelLogo showTagline size="large" tone="light" />
       </Box>
 
-      <Box sx={{ px: 3, pb: 2, width: '100%', maxWidth: 400, mx: 'auto' }}>
-        <ThreadIllustration height={72} resolveProgress={0.55} tone="dark" showDot />
+      <Box sx={{ px: 3, pt: 3, pb: 2, width: '100%', maxWidth: 400, mx: 'auto' }}>
+        <Box
+          component="img"
+          src={chaosIllustration}
+          alt=""
+          aria-hidden
+          sx={{
+            width: '100%',
+            maxWidth: 360,
+            height: 'auto',
+            display: 'block',
+            mx: 'auto',
+          }}
+        />
       </Box>
 
-      <Box sx={{ px: 3, pb: 4, width: '100%', maxWidth: 400, mx: 'auto' }}>
+      <Box sx={{ px: 3, pt: 2, pb: 4, width: '100%', maxWidth: 400, mx: 'auto' }}>
         <CalmButton
           variant="contained"
           onClick={() => navigate('/dump')}

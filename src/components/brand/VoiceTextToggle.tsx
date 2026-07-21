@@ -1,7 +1,6 @@
-import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material'
+import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import { ThreadIllustration } from './ThreadIllustration'
 
 export type InputMode = 'voice' | 'text'
 
@@ -50,24 +49,5 @@ export function VoiceTextToggle({ mode, onChange }: VoiceTextToggleProps) {
         Text
       </ToggleButton>
     </ToggleButtonGroup>
-  )
-}
-
-export function WaveformDecoration({
-  active,
-  progress = 0,
-}: {
-  active?: boolean
-  progress?: number
-}) {
-  return (
-    <Box sx={{ width: '100%', maxWidth: 320, opacity: active ? 1 : 0.7, transition: 'opacity 200ms ease' }}>
-      <ThreadIllustration
-        height={72}
-        resolveProgress={progress}
-        showDot
-        animated={active}
-      />
-    </Box>
   )
 }

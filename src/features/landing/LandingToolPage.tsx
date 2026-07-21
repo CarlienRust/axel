@@ -21,7 +21,13 @@ function LandingToolShell({
 }) {
   const meta = getLandingToolMeta(toolId)!
   return (
-    <ToolScreenLayout title={meta.title} subtitle={meta.description} backTo="/landing-tools" footer={tool.footer}>
+    <ToolScreenLayout
+      title={meta.title}
+      subtitle={meta.description}
+      illustration={meta.illustration}
+      backTo="/landing-tools"
+      footer={tool.footer}
+    >
       {tool.content}
     </ToolScreenLayout>
   )

@@ -4,16 +4,17 @@ import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { ToolScreenLayout } from '../../components/layout/ToolScreenLayout'
 import { CalmButton } from '../../components/shared/CalmButton'
-import { CalmTextArea } from '../../components/shared/CalmTextArea'
+import { VoiceTextArea } from '../../components/shared/VoiceTextArea'
 import { Disclaimer } from '../../components/shared/Disclaimer'
 import { LoadingState } from '../../components/shared/LoadingState'
 import { COPY } from '../../constants/copy'
+import { layout } from '../../theme/layout'
 import { buildJournalEntries, formatJournalForPrep } from '../journal/journalUtils'
 import { readStoreSnapshot } from '../../services/storage'
 import { generatePrepReflection } from '../../services/prep'
 import type { PrepReflection } from '../../services/prep'
 import { formatPrepSummary } from './prepPrompts'
-import { getPrepPrompt, getPrepSection, type PrepSectionId } from './prepSections'
+import { getPrepPrompt, getPrepSection, prepSectionIllustration, type PrepSectionId } from './prepSections'
 import { usePrepAnswers } from './usePrepAnswers'
 
 const VALID_SECTIONS: PrepSectionId[] = ['my-story', 'patterns', 'timeline']
@@ -74,11 +75,16 @@ function PrepSectionContent({
   }
 
   return (
-    <ToolScreenLayout title={section.title} subtitle={section.description} backTo="/prep">
+    <ToolScreenLayout
+      title={section.title}
+      subtitle={section.description}
+      illustration={prepSectionIllustration[sectionId]}
+      backTo="/prep"
+    >
       <Disclaimer />
 
       {section.showReflect && journalEntries.length > 0 && (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: layout.stackGap }}>
           {reflectMutation.isPending && <LoadingState message={COPY.prepReflecting} />}
           {reflectMutation.isError && (
             <Alert severity="error">
@@ -104,13 +110,13 @@ function PrepSectionContent({
       )}
 
       {sectionId === 'timeline' ? (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: layout.sectionGap }}>
           {journalEntries.length === 0 ? (
             <Typography variant="body2" color="text.secondary">
               {COPY.prepTimelineEmpty}
             </Typography>
           ) : (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: layout.stackGap }}>
               {[...journalEntries].reverse().map((entry) => (
                 <Paper key={entry.dumpId} sx={{ p: 2 }}>
                   <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
@@ -130,7 +136,7 @@ function PrepSectionContent({
             <Typography variant="body1" sx={{ fontWeight: 600, mb: 1.5, lineHeight: 1.5 }}>
               {COPY.prepTimelineNote}
             </Typography>
-            <CalmTextArea
+            <VoiceTextArea
               value={answers.timeline_note ?? ''}
               onChange={(e) => updateAnswer('timeline_note', e.target.value)}
               minRows={3}
@@ -140,23 +146,20 @@ function PrepSectionContent({
           </Box>
         </Box>
       ) : (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: layout.sectionGap }}>
           {section.promptIds.map((promptId) => {
             const prompt = getPrepPrompt(promptId)
             if (!prompt) return null
             return (
               <Box key={promptId} component="section">
-                <Typography variant="body1" sx={{ fontWeight: 600, lineHeight: 1.5, mb: 1, wordBreak: 'break-word' }}>
+                <Typography variant="body1" sx={{ fontWeight: 600, lineHeight: 1.5, mb: 1.5, wordBreak: 'break-word' }}>
                   {prompt.label}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5, lineHeight: 1.6 }}>
-                  {prompt.placeholder}
-                </Typography>
-                <CalmTextArea
+                <VoiceTextArea
                   value={answers[promptId] ?? ''}
                   onChange={(e) => updateAnswer(promptId, e.target.value)}
                   minRows={4}
-                  placeholder=""
+                  placeholder={prompt.placeholder}
                   slotProps={{ htmlInput: { 'aria-label': prompt.label } }}
                 />
               </Box>
@@ -168,9 +171,8 @@ function PrepSectionContent({
       <Box
         sx={{
           display: 'flex',
-          gap: 1.5,
-          pt: 3,
-          pb: 4,
+          gap: layout.stackGap,
+          pt: 2,
           '& .MuiButton-root': { flex: 1 },
         }}
       >

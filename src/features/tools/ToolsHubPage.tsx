@@ -1,12 +1,11 @@
-import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined'
-import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined'
 import CenterFocusStrongOutlinedIcon from '@mui/icons-material/CenterFocusStrongOutlined'
-import RouteOutlinedIcon from '@mui/icons-material/RouteOutlined'
 import { Box, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { renderFeatureIcon } from '../../components/brand/featureIcons'
 import { ToolListCard } from '../../components/brand/ToolListCard'
 import { ScreenShell } from '../../components/shared/ScreenShell'
 import { COPY } from '../../constants/copy'
+import { layout } from '../../theme/layout'
 import { getSessionResume } from '../navigation/sessionState'
 
 export function ToolsHubPage() {
@@ -24,31 +23,31 @@ export function ToolsHubPage() {
         />
       )}
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mt: session ? 1 : 0 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: layout.cardListGap }}>
         <ToolListCard
           title={COPY.reframeTitle}
           description={COPY.toolsReframeDesc}
-          icon={<RouteOutlinedIcon />}
+          icon={renderFeatureIcon('reframe')}
           onClick={() => navigate('/reframe')}
         />
 
         <ToolListCard
           title={COPY.landingToolsTitle}
           description={COPY.toolsLandingDesc}
-          icon={<BuildOutlinedIcon />}
+          icon={renderFeatureIcon('landingTools')}
           onClick={() => navigate('/landing-tools')}
         />
 
         <ToolListCard
           title={COPY.prepTitle}
           description={COPY.toolsPrepDesc}
-          icon={<AssignmentOutlinedIcon />}
+          icon={renderFeatureIcon('preparation')}
           onClick={() => navigate('/prep')}
         />
       </Box>
 
       {!session && (
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+        <Typography variant="body2" color="text.secondary">
           {COPY.toolsFocusEmpty}
         </Typography>
       )}

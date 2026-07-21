@@ -1,15 +1,20 @@
-import type { ThreadResolveLevel } from '../../components/brand/ThreadIllustration'
+import type { MicroIllustrationId } from '../../components/brand/MicroIllustration'
 import { COPY } from '../../constants/copy'
 import type { PrepPrompt } from './prepPrompts'
 import { prepPrompts } from './prepPrompts'
 
 export type PrepSectionId = 'my-story' | 'patterns' | 'timeline'
 
+export const prepSectionIllustration: Record<PrepSectionId, MicroIllustrationId> = {
+  'my-story': 'my_story',
+  patterns: 'patterns',
+  timeline: 'timeline',
+}
+
 export type PrepSection = {
   id: PrepSectionId
   title: string
   description: string
-  resolve: ThreadResolveLevel
   promptIds: string[]
   showReflect?: boolean
 }
@@ -19,14 +24,12 @@ export const prepSections: PrepSection[] = [
     id: 'my-story',
     title: COPY.prepMyStory,
     description: COPY.prepMyStoryDesc,
-    resolve: 'full',
     promptIds: ['when_noticed', 'impact', 'want_understood'],
   },
   {
     id: 'patterns',
     title: COPY.prepPatterns,
     description: COPY.prepPatternsDesc,
-    resolve: 'near',
     promptIds: ['contexts', 'what_helps'],
     showReflect: true,
   },
@@ -34,7 +37,6 @@ export const prepSections: PrepSection[] = [
     id: 'timeline',
     title: COPY.prepTimeline,
     description: COPY.prepTimelineDesc,
-    resolve: 'almost',
     promptIds: ['timeline_note'],
   },
 ]

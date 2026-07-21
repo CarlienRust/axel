@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import { useState, type ReactNode } from 'react'
 import { CalmButton } from '../../components/shared/CalmButton'
-import { CalmTextArea } from '../../components/shared/CalmTextArea'
+import { VoiceTextArea } from '../../components/shared/VoiceTextArea'
 import { COPY } from '../../constants/copy'
 
 export function useNameItTool() {
@@ -16,7 +16,7 @@ export function useNameItTool() {
       <Typography variant="body2" color="text.secondary">
         {COPY.nameItHint}
       </Typography>
-      <CalmTextArea
+      <VoiceTextArea
         value={value}
         onChange={(e) => {
           setValue(e.target.value)

@@ -20,7 +20,7 @@ export function ToolListCard({ title, description, icon, selected, onClick }: To
         display: 'flex',
         alignItems: 'center',
         gap: 2,
-        p: 2,
+        p: 2.5,
         width: '100%',
         textAlign: 'left',
         cursor: 'pointer',
@@ -54,7 +54,7 @@ export function ToolListCard({ title, description, icon, selected, onClick }: To
         <Typography variant="body1" fontWeight={600}>
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.25, lineHeight: 1.5 }}>
           {description}
         </Typography>
       </Box>
